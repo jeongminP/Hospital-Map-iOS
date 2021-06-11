@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		08B8B7553CBB42C1D7BA2203 /* Pods_HospitalMap_HospitalMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFE7A521F991CEE8CB5EBDD /* Pods_HospitalMap_HospitalMapUITests.framework */; };
+		259E56F226731C1A0042A853 /* DepartmentCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E56F126731C1A0042A853 /* DepartmentCode.swift */; };
+		259E56FA26731F420042A853 /* HospitalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E56F926731F420042A853 /* HospitalInfo.swift */; };
+		259E56FF26731FD40042A853 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E56FE26731FD40042A853 /* SearchResult.swift */; };
+		259E570D26732CE50042A853 /* HospDetailInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E570C26732CE50042A853 /* HospDetailInfo.swift */; };
 		25B92B5E2671E521004372DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B92B5D2671E521004372DA /* AppDelegate.swift */; };
 		25B92B602671E521004372DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B92B5F2671E521004372DA /* SceneDelegate.swift */; };
 		25B92B652671E521004372DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B92B632671E521004372DA /* Main.storyboard */; };
@@ -102,6 +106,10 @@
 
 /* Begin PBXFileReference section */
 		0865F48367A2E50EE0B9667A /* Pods-HospitalMap-HospitalMapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMap-HospitalMapUITests.release.xcconfig"; path = "Target Support Files/Pods-HospitalMap-HospitalMapUITests/Pods-HospitalMap-HospitalMapUITests.release.xcconfig"; sourceTree = "<group>"; };
+		259E56F126731C1A0042A853 /* DepartmentCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentCode.swift; sourceTree = "<group>"; };
+		259E56F926731F420042A853 /* HospitalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HospitalInfo.swift; sourceTree = "<group>"; };
+		259E56FE26731FD40042A853 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		259E570C26732CE50042A853 /* HospDetailInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HospDetailInfo.swift; sourceTree = "<group>"; };
 		25B92B5A2671E521004372DA /* HospitalMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HospitalMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25B92B5D2671E521004372DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25B92B5F2671E521004372DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -220,6 +228,25 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		259E56EF26731BE80042A853 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				259E56F126731C1A0042A853 /* DepartmentCode.swift */,
+				259E56FE26731FD40042A853 /* SearchResult.swift */,
+				259E56F926731F420042A853 /* HospitalInfo.swift */,
+				259E570C26732CE50042A853 /* HospDetailInfo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		259E56F026731BEE0042A853 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				25B92C392671F389004372DA /* MainViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		25B92B512671E521004372DA = {
 			isa = PBXGroup;
 			children = (
@@ -245,7 +272,8 @@
 		25B92B5C2671E521004372DA /* HospitalMap */ = {
 			isa = PBXGroup;
 			children = (
-				25B92C392671F389004372DA /* MainViewController.swift */,
+				259E56F026731BEE0042A853 /* UI */,
+				259E56EF26731BE80042A853 /* Model */,
 				25B92B5D2671E521004372DA /* AppDelegate.swift */,
 				25B92B5F2671E521004372DA /* SceneDelegate.swift */,
 				25B92B632671E521004372DA /* Main.storyboard */,
@@ -644,8 +672,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				259E56FA26731F420042A853 /* HospitalInfo.swift in Sources */,
+				259E570D26732CE50042A853 /* HospDetailInfo.swift in Sources */,
 				25B92C3A2671F389004372DA /* MainViewController.swift in Sources */,
 				25B92B5E2671E521004372DA /* AppDelegate.swift in Sources */,
+				259E56F226731C1A0042A853 /* DepartmentCode.swift in Sources */,
+				259E56FF26731FD40042A853 /* SearchResult.swift in Sources */,
 				25B92B602671E521004372DA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
