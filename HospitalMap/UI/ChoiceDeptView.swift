@@ -7,13 +7,7 @@
 
 import Foundation
 
-protocol ChoiceDeptViewDelegate: AnyObject {
-    func choiceDeptViewClicked(_ choiceDeptView: ChoiceDeptView)
-}
-
 class ChoiceDeptView: UIButton {
-    weak var delegate: ChoiceDeptViewDelegate?
-    
     private let verticalStackView = UIStackView()
     private let choiceTitleLabel = UILabel()
     private let selectedDeptLabel = UILabel()
