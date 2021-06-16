@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ChoiceDeptView: UIButton {
+class ChoiceDeptView: UITextField {
     private let verticalStackView = UIStackView()
     private let choiceTitleLabel = UILabel()
     private let selectedDeptLabel = UILabel()
@@ -68,5 +68,9 @@ class ChoiceDeptView: UIButton {
             make.leading.equalToSuperview().offset(15)
             make.trailing.equalTo(rightImageView.snp.leading)
         }
+    }
+    
+    func setDeptLabel(to string: String) {
+        selectedDeptLabel.text = string
     }
 }
