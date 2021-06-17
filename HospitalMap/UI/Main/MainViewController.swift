@@ -20,6 +20,7 @@ class MainViewController: UIViewController {
     private var mapView: MTMapView?
     private var tmpSelectedRow: Int = 0
     private var currentDept: DepartmendCode = .IM
+    private var currentLocation: MTMapPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,7 @@ class MainViewController: UIViewController {
         mapView = MTMapView(frame: view.bounds)
         if let mapView = mapView {
             mapView.delegate = self
+            mapView.setZoomLevel(3, animated: true)
             mapView.baseMapType = .standard
             mapView.currentLocationTrackingMode = .onWithoutHeading
             mapView.showCurrentLocationMarker = true
@@ -152,13 +154,16 @@ class MainViewController: UIViewController {
     }
     
     @objc private func currentLocationButtonDidTapped() {
-        print("현재위치 버튼 누름")
-        //TODO: - 현재 위치로 이동하는 로직 구현
+        if let location = currentLocation {
+            mapView?.setMapCenter(location, animated: true)
+        }
     }
 }
 
 extension MainViewController: MTMapViewDelegate {
-    
+    func mapView(_ mapView: MTMapView!, updateCurrentLocation location: MTMapPoint!, withAccuracy accuracy: MTMapLocationAccuracy) {
+        currentLocation = location
+    }
 }
 
 //MARK: - UIPickerViewDelegate, UIPickerViewDataSource
