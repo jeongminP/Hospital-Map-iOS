@@ -10,40 +10,54 @@ import SnapKit
 
 class MainViewController: UIViewController {
     
+    //MARK: - Private Properties - UI
     private let choiceDeptView = ChoiceDeptView()
+    private let emdView = UIButton()
     private let showListButton = UIButton()
     private let currentLocationButton = UIButton()
     private let pickerView = UIPickerView()
     private let infoView = InfoView()
-    private let departmendCodeArr = DepartmendCode.allCases
-    
     private var mapView: MTMapView?
-    private var tmpSelectedRow: Int = 0
-    private var currentDept: DepartmendCode = .IM
-    private var currentLocation: MTMapPoint?
     
+    //MARK: - Private Properties - Kakao Map
+    private var currentLocation: MTMapPoint?
+    private var reverseGeoCoder: MTMapReverseGeoCoder?
+    private var centerEMDong = ""
+    private var lastSelectedItem: MTMapPOIItem?
+    
+    //MARK: - Private Properties
+    private let departmendCodeArr = DepartmendCode.allCases
+    private var currentDept: DepartmendCode = .IM
+    private var tmpSelectedRow: Int = 0
+    private var hospitalItemList: [HospitalInfo] = []
+    
+    //MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         setupMapView()
         setupChoiceDeptView()
         setupPickerView()
+        setupEmdLabel()
         setupShowListButton()
         setupCurrentLocationButton()
         setupInfoView()
+        
         //TODO: - 로딩 뷰 구현
+        
     }
-
+    
     private func setupMapView() {
         mapView = MTMapView(frame: view.bounds)
-        if let mapView = mapView {
-            mapView.delegate = self
-            mapView.setZoomLevel(3, animated: true)
-            mapView.baseMapType = .standard
-            mapView.currentLocationTrackingMode = .onWithoutHeading
-            mapView.showCurrentLocationMarker = true
-            view.addSubview(mapView)
+        guard let mapView = mapView else {
+            return
         }
+        mapView.delegate = self
+        mapView.setZoomLevel(2, animated: true)
+        mapView.baseMapType = .standard
+        mapView.currentLocationTrackingMode = .onWithoutHeading
+        mapView.showCurrentLocationMarker = true
+        view.addSubview(mapView)
     }
     
     private func setupChoiceDeptView() {
@@ -77,6 +91,21 @@ class MainViewController: UIViewController {
         toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
         toolBar.isUserInteractionEnabled = true
         choiceDeptView.inputAccessoryView = toolBar
+    }
+    
+    private func setupEmdLabel() {
+        emdView.backgroundColor = UIColor.gray
+        emdView.layer.cornerRadius = 11.5
+        emdView.tintColor = UIColor.white
+        emdView.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        emdView.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        emdView.isUserInteractionEnabled = false
+        view.addSubview(emdView)
+        
+        emdView.snp.makeConstraints { make in
+            make.top.equalTo(choiceDeptView.snp.bottom).offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+        }
     }
     
     private func setupShowListButton() {
@@ -141,6 +170,7 @@ class MainViewController: UIViewController {
         choiceDeptView.resignFirstResponder()
         
         //TODO: - API 다시 요청
+        
     }
 
     @objc private func pickerViewCancelDidTapped() {
@@ -154,15 +184,79 @@ class MainViewController: UIViewController {
     }
     
     @objc private func currentLocationButtonDidTapped() {
-        if let location = currentLocation {
-            mapView?.setMapCenter(location, animated: true)
+        guard let location = currentLocation else {
+            return
         }
+        mapView?.setMapCenter(location, animated: true)
     }
 }
 
+//MARK: - MTMapViewDelegate
 extension MainViewController: MTMapViewDelegate {
-    func mapView(_ mapView: MTMapView!, updateCurrentLocation location: MTMapPoint!, withAccuracy accuracy: MTMapLocationAccuracy) {
+    func mapView(_ mapView: MTMapView?, updateCurrentLocation location: MTMapPoint?, withAccuracy accuracy: MTMapLocationAccuracy) {
         currentLocation = location
+        mapView?.currentLocationTrackingMode = .onWithoutHeadingWithoutMapMoving
+    }
+    
+    func mapView(_ mapView: MTMapView?, singleTapOn mapPoint: MTMapPoint?) {
+        infoView.isHidden = true
+    }
+    
+    func mapView(_ mapView: MTMapView?, dragStartedOn mapPoint: MTMapPoint?) {
+        infoView.isHidden = true
+        if let item = lastSelectedItem {
+            mapView?.deselect(item)
+            lastSelectedItem = nil
+        }
+    }
+    
+    func mapView(_ mapView: MTMapView?, finishedMapMoveAnimation mapCenterPoint: MTMapPoint?) {
+        guard let point = mapCenterPoint,
+              let key = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as? String else {
+            return
+        }
+        
+        // 주소 찾기 시작
+        // ARC 때문에 멤버로 할당해주어야 비동기 이벤트 처리 시까지 유지됨.
+        reverseGeoCoder = MTMapReverseGeoCoder.init(mapPoint: point, with: self, withOpenAPIKey: key)
+        reverseGeoCoder?.startFindingAddress()
+    }
+}
+
+extension MainViewController: MTMapReverseGeoCoderDelegate {
+    func mtMapReverseGeoCoder(_ rGeoCoder: MTMapReverseGeoCoder?, foundAddress addressString: String?) {
+        guard let addrStr = addressString,
+              let newEMDong = parseEMDongNm(from: addrStr),
+              centerEMDong != newEMDong else {
+            
+            //TODO: - 로딩뷰 숨기기
+            
+            reverseGeoCoder = nil
+            return
+        }
+        
+        centerEMDong = newEMDong
+        emdView.setTitle(centerEMDong, for: .normal)
+        reverseGeoCoder = nil
+    }
+    
+    func mapView(_ mapView: MTMapView?, failedUpdatingCurrentLocationWithError error: Error?) {
+        reverseGeoCoder = nil
+        if let error = error {
+            NSLog("%s", error.localizedDescription)
+        }
+    }
+    
+    private func parseEMDongNm(from addrStr: String) -> String? {
+        let splitArr = addrStr.components(separatedBy: " ")
+        for s in splitArr {
+            let last = s[s.index(before: s.endIndex)]
+            if last == "읍" || last == "면" || last == "동"
+                || last == "로" || last == "길" || last == "가" {
+                return s
+            }
+        }
+        return nil
     }
 }
 
