@@ -14,6 +14,7 @@ class MainViewController: UIViewController {
     private let showListButton = UIButton()
     private let currentLocationButton = UIButton()
     private let pickerView = UIPickerView()
+    private let infoView = InfoView()
     private let departmendCodeArr = DepartmendCode.allCases
     
     private var mapView: MTMapView?
@@ -25,13 +26,10 @@ class MainViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
         setupMapView()
         setupChoiceDeptView()
+        setupPickerView()
         setupShowListButton()
         setupCurrentLocationButton()
-        
-        //TODO: - infoView 구현
-        
-        setupPickerView()
-        
+        setupInfoView()
         //TODO: - 로딩 뷰 구현
     }
 
@@ -120,6 +118,17 @@ class MainViewController: UIViewController {
             make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).offset(-10)
             make.bottom.equalTo(showListButton.snp.top).offset(-10)
             make.width.height.equalTo(50)
+        }
+    }
+    
+    private func setupInfoView() {
+        view.addSubview(infoView)
+        
+        infoView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
+            make.height.equalTo(150)
         }
     }
     

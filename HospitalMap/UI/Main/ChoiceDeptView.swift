@@ -34,6 +34,7 @@ class ChoiceDeptView: UITextField {
         verticalStackView.addArrangedSubview(choiceTitleLabel)
         
         selectedDeptLabel.text = "내과"
+        selectedDeptLabel.textColor = UIColor.black
         selectedDeptLabel.font = UIFont.systemFont(ofSize: 20)
         verticalStackView.addArrangedSubview(selectedDeptLabel)
         
