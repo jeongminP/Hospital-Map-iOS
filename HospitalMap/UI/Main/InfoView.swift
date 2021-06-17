@@ -9,9 +9,13 @@ import Foundation
 
 class InfoView: UIView {
     private let verticalStackView = UIStackView()
+    private let hospNameStackView = UIStackView()
+    private let telNoStackView = UIStackView()
     private let hospNameLabel = UILabel()
+    private let distanceLabel = UILabel()
     private let codeNameLabel = UILabel()
     private let addressLabel = UILabel()
+    private let callImageView = UIImageView()
     private let telNoLabel = UILabel()
     private let hospUrlLabel = UILabel()
     
@@ -33,43 +37,71 @@ class InfoView: UIView {
         hospNameLabel.text = "병원 이름"
         hospNameLabel.textColor = UIColor.black
         hospNameLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        distanceLabel.text = "거리"
+        distanceLabel.textColor = UIColor.darkGray
+        distanceLabel.font = UIFont.systemFont(ofSize: 15)
+        
         codeNameLabel.text = "코드명"
         codeNameLabel.textColor = UIColor.darkGray
         codeNameLabel.font = UIFont.systemFont(ofSize: 15)
+        
+        let spaceView = UILabel()
+        spaceView.text = " "
+        
+        if let image = UIImage.init(named: "SF_phone_down_fill") {
+            let imageSize: CGSize = CGSize(width: 15, height: 15)
+            let resizedImage = image.resizedImage(for: imageSize)
+                .withRenderingMode(.alwaysTemplate)
+            callImageView.image = resizedImage
+        }
+        callImageView.tintColor = UIColor.darkGray
+        callImageView.isUserInteractionEnabled = false
         
         addressLabel.text = "주소"
         addressLabel.textColor = UIColor.black
         telNoLabel.text = "000-0000-0000"
         telNoLabel.textColor = UIColor.red
-        hospUrlLabel.text = "홈페이지 주소"
-        hospUrlLabel.textColor = UIColor.blue
         
-        addSubview(hospNameLabel)
-        addSubview(codeNameLabel)
-        addSubview(addressLabel)
-        addSubview(telNoLabel)
-        addSubview(hospUrlLabel)
+        let hospUrlText = "홈페이지 주소"
+        let textRange = NSMakeRange(0, hospUrlText.count)
+        let attributedString = NSMutableAttributedString.init(string: hospUrlText)
+        attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: textRange)
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.blue, range: textRange)
+        hospUrlLabel.attributedText = attributedString
         
-        hospNameLabel.snp.makeConstraints { make in
-            make.left.top.equalToSuperview().offset(10)
-        }
-        codeNameLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(10)
-            make.top.equalTo(hospNameLabel.snp.bottom)
-        }
-        addressLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(10)
-            make.top.equalTo(codeNameLabel.snp.bottom).offset(10)
-        }
-        telNoLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(10)
-            make.top.equalTo(addressLabel.snp.bottom)
-        }
-        hospUrlLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(10)
-            make.top.equalTo(telNoLabel.snp.bottom)
-        }
+        hospNameStackView.addArrangedSubview(hospNameLabel)
+        hospNameStackView.addArrangedSubview(distanceLabel)
+        telNoStackView.addArrangedSubview(callImageView)
+        telNoStackView.addArrangedSubview(telNoLabel)
         
-        //TODO: - 뷰의 높이를 어떻게 유동적이게 할지 고민해보기
+        verticalStackView.addArrangedSubview(hospNameStackView)
+        verticalStackView.addArrangedSubview(codeNameLabel)
+        verticalStackView.addArrangedSubview(spaceView)
+        verticalStackView.addArrangedSubview(addressLabel)
+        verticalStackView.addArrangedSubview(telNoStackView)
+        verticalStackView.addArrangedSubview(hospUrlLabel)
+        
+        setupStackView()
+    }
+    
+    private func setupStackView() {
+        hospNameStackView.axis = .horizontal
+        hospNameStackView.alignment = .bottom
+        hospNameStackView.spacing = 10
+        
+        telNoStackView.axis = .horizontal
+        telNoStackView.alignment = .center
+        telNoStackView.spacing = 5
+        
+        verticalStackView.axis = .vertical
+        verticalStackView.alignment = .leading
+        addSubview(verticalStackView)
+        
+        verticalStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview().offset(-10)
+            make.leading.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-15)
+        }
     }
 }

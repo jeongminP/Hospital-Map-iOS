@@ -128,8 +128,9 @@ class MainViewController: UIViewController {
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-10)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-10)
-            make.height.equalTo(150)
         }
+        
+        infoView.isHidden = true
     }
     
     @objc private func pickerViewDoneDidTapped() {
