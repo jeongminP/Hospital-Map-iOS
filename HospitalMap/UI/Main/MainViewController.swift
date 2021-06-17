@@ -221,6 +221,16 @@ extension MainViewController: MTMapViewDelegate {
         reverseGeoCoder = MTMapReverseGeoCoder.init(mapPoint: point, with: self, withOpenAPIKey: key)
         reverseGeoCoder?.startFindingAddress()
     }
+    
+    func mapView(_ mapView: MTMapView!, selectedPOIItem poiItem: MTMapPOIItem!) -> Bool {
+        //TODO: - infoView 표시
+        
+        return true
+    }
+    
+    func mapView(_ mapView: MTMapView!, touchedCalloutBalloonOf poiItem: MTMapPOIItem!) {
+        //TODO: - 상세화면으로 이동
+    }
 }
 
 extension MainViewController: MTMapReverseGeoCoderDelegate {
