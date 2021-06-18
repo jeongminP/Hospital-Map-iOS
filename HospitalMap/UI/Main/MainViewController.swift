@@ -27,6 +27,7 @@ class MainViewController: UIViewController {
     
     //MARK: - Private Properties
     private let departmendCodeArr = DepartmendCode.allCases
+    private let userDefaultsCurrentDeptKey = "userDefaultsCurrentDeptKey"
     private var currentDept: DepartmendCode = .IM
     private var tmpSelectedRow: Int = 0
     private var hospitalItemList: [HospitalInfo] = []
@@ -70,12 +71,19 @@ class MainViewController: UIViewController {
             make.trailing.equalToSuperview().offset(-10)
             make.height.equalTo(70)
         }
+        
+        if let storedDeptCode = UserDefaults.standard.string(forKey: userDefaultsCurrentDeptKey),
+           let storedDept = DepartmendCode(rawValue: storedDeptCode) {
+            currentDept = storedDept
+            choiceDeptView.setDeptLabel(to: currentDept.departmentName)
+        }
     }
     
     private func setupPickerView() {
         // 피커뷰 추가
         pickerView.delegate = self
         pickerView.backgroundColor = UIColor.systemGray6
+        pickerView.selectRow(departmendCodeArr.firstIndex(of: currentDept) ?? 0, inComponent: 0, animated: true)
         choiceDeptView.inputView = pickerView
         
         // 툴바 추가
@@ -167,6 +175,7 @@ class MainViewController: UIViewController {
     @objc private func pickerViewDoneDidTapped() {
         currentDept = departmendCodeArr[tmpSelectedRow]
         choiceDeptView.setDeptLabel(to: currentDept.departmentName)
+        UserDefaults.standard.set(currentDept.rawValue, forKey: userDefaultsCurrentDeptKey)
         choiceDeptView.resignFirstResponder()
         
         //TODO: - API 다시 요청
