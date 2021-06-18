@@ -94,7 +94,7 @@ class MainViewController: UIViewController {
     }
     
     private func setupEmdLabel() {
-        emdView.backgroundColor = UIColor.gray
+        emdView.backgroundColor = UIColor.init(white: 0.3, alpha: 0.7)
         emdView.layer.cornerRadius = 11.5
         emdView.tintColor = UIColor.white
         emdView.titleLabel?.font = UIFont.systemFont(ofSize: 15)
