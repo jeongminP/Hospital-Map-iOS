@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.rootViewController = UINavigationController(rootViewController: MainViewController())
+        
+        copyDatabaseIfNeeded()
         return true
     }
 
@@ -37,3 +39,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+func copyDatabaseIfNeeded() {
+    // Move database file from bundle to documents folder
+    
+    let fileManager = FileManager.default
+    let documentsUrl = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+    
+    guard documentsUrl.count != 0 else {
+        return // Could not find documents URL
+    }
+    
+    let finalDatabaseURL = documentsUrl.first!.appendingPathComponent("hdb.db")
+    
+    if !( (try? finalDatabaseURL.checkResourceIsReachable()) ?? false) {
+        print("DB does not exist in documents folder")
+        
+        let documentsURL = Bundle.main.resourceURL?.appendingPathComponent("hdb.db")
+        
+        do {
+            try fileManager.copyItem(atPath: (documentsURL?.path)!, toPath: finalDatabaseURL.path)
+            print("디비 옮기기 성공")
+        } catch let error as NSError {
+            print("Couldn't copy file to final location! Error:\(error.description)")
+        }
+        
+    } else {
+        print("Database file found at path: \(finalDatabaseURL.path)")
+    }
+    
+}
