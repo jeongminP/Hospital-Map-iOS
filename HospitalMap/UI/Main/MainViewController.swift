@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 class MainViewController: UIViewController {
     
@@ -30,7 +31,20 @@ class MainViewController: UIViewController {
     private let userDefaultsCurrentDeptKey = "userDefaultsCurrentDeptKey"
     private var currentDept: DepartmendCode = .IM
     private var tmpSelectedRow: Int = 0
-    private var hospitalItemList: [HospitalInfo] = []
+    private var hospitalItemList: [HospitalInfo] = [] {
+        didSet {
+            didSetHospitalItemList()
+        }
+    }
+    
+    fileprivate class POIItemUserObject<T: SearchResultItemType>: NSObject {
+        let item: T
+        
+        init(item: T) {
+            self.item = item
+            super.init()
+        }
+    }
     
     //MARK: - Methods
     override func viewDidLoad() {
@@ -125,6 +139,7 @@ class MainViewController: UIViewController {
         showListButton.setTitle("병원 목록 보기", for: .normal)
         showListButton.setTitleColor(UIColor.black, for: .normal)
         showListButton.addTarget(self, action: #selector(showListButtonDidTapped), for: .touchUpInside)
+        showListButton.isUserInteractionEnabled = false
         
         view.addSubview(showListButton)
         
@@ -178,8 +193,8 @@ class MainViewController: UIViewController {
         UserDefaults.standard.set(currentDept.rawValue, forKey: userDefaultsCurrentDeptKey)
         choiceDeptView.resignFirstResponder()
         
-        //TODO: - API 다시 요청
-        
+        // API 다시 요청
+        requestHospitalList(deptCode: currentDept, emdongName: centerEMDong)
     }
 
     @objc private func pickerViewCancelDidTapped() {
@@ -197,6 +212,58 @@ class MainViewController: UIViewController {
             return
         }
         mapView?.setMapCenter(location, animated: true)
+    }
+    
+    //MARK: - Networking Method
+    private func requestHospitalList(deptCode: DepartmendCode, emdongName: String) {
+        let urlString = "http://apis.data.go.kr/B551182/hospInfoService1/getHospBasisList1?pageNo=1&numOfRows=500&_type=json"
+            + "&dgsbjtCd=" + deptCode.rawValue + "&emdongNm=" + emdongName
+        guard let encodedStr = urlString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed),
+            let url = URL(string: encodedStr + "&ServiceKey=Q%2BbQw%2FUNPpDxP9hAGr3SQzR71t%2BCRCoDcFtPYmxVpEdlObYNjUINxMD3hurNngT3r19ae%2FDHw7t%2B5YhzIm2EuA%3D%3D") else
+        {
+            return
+        }
+        
+        AF.request(url, method: .get)
+            .validate()
+            .responseData { response in
+                switch response.result {
+                case .success(let data):
+                    do {
+                        let res = try JSONDecoder().decode(ResponseStruct<HospitalInfo>.self, from: data)
+                        self.hospitalItemList = res.response?.body?.items?["item"] ?? []
+                    } catch {
+                        NSLog("%s", String(describing: error))
+                    }
+                case .failure(let e):
+                    print(e)
+                }
+            }
+    }
+    
+    private func didSetHospitalItemList() {
+        showListButton.setTitle("병원 목록 보기 (\(hospitalItemList.count))", for: .normal)
+        showListButton.isUserInteractionEnabled = true
+        
+        //TODO: - empty 토스트 메시지 표시
+        
+        mapView?.removeAllPOIItems()
+        for idx in 0..<hospitalItemList.count {
+            let item = hospitalItemList[idx]
+            guard let xPos = item.getXPos(),
+                  let yPos = item.getYPos() else {
+                continue
+            }
+            let marker = MTMapPOIItem()
+            marker.itemName = item.hospName
+            marker.tag = idx
+            marker.userObject = POIItemUserObject(item: item)
+            marker.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: yPos, longitude: xPos))
+            marker.markerType = .bluePin
+            marker.markerSelectedType = .redPin
+            marker.showAnimationType = .springFromGround
+            mapView?.add(marker)
+        }
     }
 }
 
@@ -233,7 +300,7 @@ extension MainViewController: MTMapViewDelegate {
     
     func mapView(_ mapView: MTMapView!, selectedPOIItem poiItem: MTMapPOIItem!) -> Bool {
         //TODO: - infoView 표시
-        
+        infoView.isHidden = false
         return true
     }
     
@@ -256,6 +323,7 @@ extension MainViewController: MTMapReverseGeoCoderDelegate {
         
         centerEMDong = newEMDong
         emdView.setTitle(centerEMDong, for: .normal)
+        requestHospitalList(deptCode: currentDept, emdongName: centerEMDong)
         reverseGeoCoder = nil
     }
     

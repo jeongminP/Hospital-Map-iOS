@@ -9,13 +9,21 @@ import Foundation
 
 typealias SearchResultItemType = Codable & Equatable
 
+struct ResponseStruct<T: SearchResultItemType>: Codable {
+    let response: Response<T>?
+    
+    struct Response<T: SearchResultItemType>: Codable {
+        let resultCode: String?
+        let resultMsg: String?
+        let body: SearchResult<T>?
+    }
+}
+
 struct SearchResult<T: SearchResultItemType>: Codable {
-    let resultCode: String?
-    let resultMsg: String?
     let totalCount: Int?
     let pageNo: Int?
     let numOfRows: Int?
-    let items: [SearchResultItems<T>]
+    let items: [String: [T]]?
     
     var hasNext: Bool {
         guard let pageNo = pageNo,
@@ -25,8 +33,4 @@ struct SearchResult<T: SearchResultItemType>: Codable {
         }
         return pageNo + numOfRows < totalCount
     }
-}
-
-struct SearchResultItems<T: SearchResultItemType>: Codable {
-    let item: [T]
 }
