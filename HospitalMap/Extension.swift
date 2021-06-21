@@ -15,3 +15,7 @@ extension UIImage {
         }
     }
 }
+
+extension UIColor {
+    static let iconBlue = UIColor(red: 74/255, green: 119/255, blue: 245/255, alpha: 1.0)
+}

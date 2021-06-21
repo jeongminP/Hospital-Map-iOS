@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		08B8B7553CBB42C1D7BA2203 /* Pods_HospitalMap_HospitalMapUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BFE7A521F991CEE8CB5EBDD /* Pods_HospitalMap_HospitalMapUITests.framework */; };
 		167BB1122679C93A0012DF76 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BB1112679C93A0012DF76 /* InfoView.swift */; };
+		167BB11726805C140012DF76 /* icon_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 167BB11626805C140012DF76 /* icon_loading.png */; };
 		25850BF62678D28900E09246 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25850BF52678D28900E09246 /* Extension.swift */; };
 		25850BF82678D2BE00E09246 /* ChoiceDeptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25850BF72678D2BE00E09246 /* ChoiceDeptView.swift */; };
 		259E56F226731C1A0042A853 /* DepartmentCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E56F126731C1A0042A853 /* DepartmentCode.swift */; };
@@ -110,6 +111,7 @@
 /* Begin PBXFileReference section */
 		0865F48367A2E50EE0B9667A /* Pods-HospitalMap-HospitalMapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMap-HospitalMapUITests.release.xcconfig"; path = "Target Support Files/Pods-HospitalMap-HospitalMapUITests/Pods-HospitalMap-HospitalMapUITests.release.xcconfig"; sourceTree = "<group>"; };
 		167BB1112679C93A0012DF76 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		167BB11626805C140012DF76 /* icon_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_loading.png; sourceTree = "<group>"; };
 		25850BF52678D28900E09246 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		25850BF72678D2BE00E09246 /* ChoiceDeptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceDeptView.swift; sourceTree = "<group>"; };
 		259E56F126731C1A0042A853 /* DepartmentCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentCode.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 		25B92B5C2671E521004372DA /* HospitalMap */ = {
 			isa = PBXGroup;
 			children = (
+				167BB11626805C140012DF76 /* icon_loading.png */,
 				259E56F026731BEE0042A853 /* UI */,
 				259E56EF26731BE80042A853 /* Model */,
 				25B92B5D2671E521004372DA /* AppDelegate.swift */,
@@ -506,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25B92C062671EC81004372DA /* map_present.png in Resources */,
+				167BB11726805C140012DF76 /* icon_loading.png in Resources */,
 				25B92BF22671EC81004372DA /* map_pin@3x.png in Resources */,
 				25B92BEE2671EC81004372DA /* map_pin_red@3x.png in Resources */,
 				25B92C042671EC81004372DA /* map_pin.png in Resources */,
