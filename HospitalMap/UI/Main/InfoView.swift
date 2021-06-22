@@ -44,8 +44,11 @@ class InfoView: UIView {
         codeNameLabel.text = "코드명"
         codeNameLabel.textColor = UIColor.darkGray
         codeNameLabel.font = UIFont.systemFont(ofSize: 15)
+        codeNameLabel.lineBreakMode = .byWordWrapping
+        codeNameLabel.numberOfLines = 0
         
         let spaceView = UILabel()
+        spaceView.font = UIFont.systemFont(ofSize: 10)
         spaceView.text = " "
         
         if let image = UIImage.init(named: "SF_phone_down_fill") {
@@ -59,6 +62,10 @@ class InfoView: UIView {
         
         addressLabel.text = "주소"
         addressLabel.textColor = UIColor.black
+        addressLabel.font = UIFont.systemFont(ofSize: 15)
+        addressLabel.lineBreakMode = .byWordWrapping
+        addressLabel.numberOfLines = 0
+        
         telNoLabel.text = "000-0000-0000"
         telNoLabel.textColor = UIColor.red
         
@@ -74,7 +81,6 @@ class InfoView: UIView {
         hospUrlLabel.addGestureRecognizer(hospUrlTap)
         
         hospNameStackView.addArrangedSubview(hospNameLabel)
-        hospNameStackView.addArrangedSubview(distanceLabel)
         
         telNoStackView.addArrangedSubview(callImageView)
         telNoStackView.addArrangedSubview(telNoLabel)
@@ -101,6 +107,7 @@ class InfoView: UIView {
         
         verticalStackView.axis = .vertical
         verticalStackView.alignment = .leading
+        verticalStackView.spacing = 3
         addSubview(verticalStackView)
         
         verticalStackView.snp.makeConstraints { make in
@@ -133,10 +140,11 @@ class InfoView: UIView {
                                   completionHandler: { success in })
     }
     
-    func setHospitalInfo(item: HospitalInfo) {
+    func setHospitalInfo(item: HospitalInfo, distance: Double?) {
         if let name = item.hospName {
             hospNameLabel.text = name
         }
+        
         if let code = item.classCodeName {
             codeNameLabel.text = code
         }
@@ -166,6 +174,15 @@ class InfoView: UIView {
         } else {
             hospUrlLabel.isHidden = true
             verticalStackView.removeArrangedSubview(hospUrlLabel)
+        }
+        
+        if let distance = distance {
+            distanceLabel.text = String(format: "%.2f km", distance)
+            distanceLabel.isHidden = false
+            hospNameStackView.addArrangedSubview(distanceLabel)
+        } else {
+            distanceLabel.isHidden = true
+            hospNameStackView.removeArrangedSubview(distanceLabel)
         }
     }
 }

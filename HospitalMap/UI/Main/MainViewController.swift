@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Alamofire
+import CoreLocation
 
 class MainViewController: UIViewController {
     
@@ -287,6 +288,12 @@ class MainViewController: UIViewController {
             mapView?.add(marker)
         }
     }
+    
+    func distance(from: MTMapPointGeo, to:MTMapPointGeo) -> Double {
+        let fromLoc = CLLocation(latitude: from.latitude, longitude: from.longitude)
+        let toLoc = CLLocation(latitude: to.latitude, longitude: to.longitude)
+        return fromLoc.distance(from: toLoc) / 1000
+    }
 }
 
 //MARK: - MTMapViewDelegate
@@ -326,7 +333,14 @@ extension MainViewController: MTMapViewDelegate {
         }
         
         // infoView 표시
-        infoView.setHospitalInfo(item: hospItem)
+        var dist: Double?
+        if let curLocGeo = currentLocation?.mapPointGeo(),
+           let xPos = hospItem.getXPos(),
+           let yPos = hospItem.getYPos() {
+            dist = distance(from: curLocGeo, to: MTMapPointGeo(latitude: yPos, longitude: xPos))
+        }
+        
+        infoView.setHospitalInfo(item: hospItem, distance: dist)
         infoView.isHidden = false
         return true
     }
