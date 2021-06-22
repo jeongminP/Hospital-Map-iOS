@@ -19,6 +19,7 @@ class MainViewController: UIViewController {
     private let pickerView = UIPickerView()
     private let infoView = InfoView()
     private var mapView: MTMapView?
+    private var loadingView: LoadingView?
     
     //MARK: - Private Properties - Kakao Map
     private var currentLocation: MTMapPoint?
@@ -57,9 +58,7 @@ class MainViewController: UIViewController {
         setupShowListButton()
         setupCurrentLocationButton()
         setupInfoView()
-        
-        //TODO: - 로딩 뷰 구현
-        
+        setupLoadingView()
     }
     
     private func setupMapView() {
@@ -187,6 +186,19 @@ class MainViewController: UIViewController {
         infoView.isHidden = true
     }
     
+    private func setupLoadingView() {
+        loadingView = LoadingView(frame: view.bounds)
+        guard let loadingView = loadingView else {
+            return
+        }
+        view.addSubview(loadingView)
+        loadingView.stopLoading()
+        
+        loadingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
     @objc private func pickerViewDoneDidTapped() {
         currentDept = departmendCodeArr[tmpSelectedRow]
         choiceDeptView.setDeptLabel(to: currentDept.departmentName)
@@ -216,6 +228,7 @@ class MainViewController: UIViewController {
     
     //MARK: - Networking Method
     private func requestHospitalList(deptCode: DepartmendCode, emdongName: String) {
+        loadingView?.startLoading()
         let urlString = "http://apis.data.go.kr/B551182/hospInfoService1/getHospBasisList1?pageNo=1&numOfRows=500&_type=json"
             + "&dgsbjtCd=" + deptCode.rawValue + "&emdongNm=" + emdongName
         guard let encodedStr = urlString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed),
@@ -242,6 +255,7 @@ class MainViewController: UIViewController {
     }
     
     private func didSetHospitalItemList() {
+        loadingView?.stopLoading()
         showListButton.setTitle("병원 목록 보기 (\(hospitalItemList.count))", for: .normal)
         showListButton.isUserInteractionEnabled = true
         
@@ -314,9 +328,7 @@ extension MainViewController: MTMapReverseGeoCoderDelegate {
         guard let addrStr = addressString,
               let newEMDong = parseEMDongNm(from: addrStr),
               centerEMDong != newEMDong else {
-            
-            //TODO: - 로딩뷰 숨기기
-            
+            loadingView?.stopLoading()
             reverseGeoCoder = nil
             return
         }
