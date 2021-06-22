@@ -68,18 +68,24 @@ class InfoView: UIView {
         attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: textRange)
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.blue, range: textRange)
         hospUrlLabel.attributedText = attributedString
+        hospUrlLabel.isUserInteractionEnabled = true
+        
+        let hospUrlTap = UITapGestureRecognizer(target: self, action: #selector(hospUrlLabelDidTapped))
+        hospUrlLabel.addGestureRecognizer(hospUrlTap)
         
         hospNameStackView.addArrangedSubview(hospNameLabel)
         hospNameStackView.addArrangedSubview(distanceLabel)
+        
         telNoStackView.addArrangedSubview(callImageView)
         telNoStackView.addArrangedSubview(telNoLabel)
+        telNoStackView.isUserInteractionEnabled = true
+        let telNoTap = UITapGestureRecognizer(target: self, action: #selector(telNoStackViewDidTapped))
+        telNoStackView.addGestureRecognizer(telNoTap)
         
         verticalStackView.addArrangedSubview(hospNameStackView)
         verticalStackView.addArrangedSubview(codeNameLabel)
         verticalStackView.addArrangedSubview(spaceView)
         verticalStackView.addArrangedSubview(addressLabel)
-        verticalStackView.addArrangedSubview(telNoStackView)
-        verticalStackView.addArrangedSubview(hospUrlLabel)
         
         setupStackView()
     }
@@ -103,6 +109,28 @@ class InfoView: UIView {
             make.leading.equalToSuperview().offset(15)
             make.trailing.equalToSuperview().offset(-15)
         }
+    }
+    
+    @objc private func telNoStackViewDidTapped() {
+        guard let telNo = telNoLabel.text,
+              let url = URL(string: "tel://" + telNo) else {
+            return
+        }
+        
+        UIApplication.shared.open(url,
+                                  options: [:],
+                                  completionHandler: { success in })
+    }
+    
+    @objc private func hospUrlLabelDidTapped() {
+        guard let hospUrl = hospUrlLabel.text,
+              let url = URL(string: hospUrl) else {
+            return
+        }
+        
+        UIApplication.shared.open(url,
+                                  options: [:],
+                                  completionHandler: { success in })
     }
     
     func setHospitalInfo(item: HospitalInfo) {
