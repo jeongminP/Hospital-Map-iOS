@@ -175,6 +175,8 @@ class MainViewController: UIViewController {
     }
     
     private func setupInfoView() {
+        let infoViewTap = UITapGestureRecognizer(target: self, action: #selector(infoViewDidTapped))
+        infoView.addGestureRecognizer(infoViewTap)
         view.addSubview(infoView)
         
         infoView.snp.makeConstraints { make in
@@ -216,6 +218,7 @@ class MainViewController: UIViewController {
     }
     
     @objc private func showListButtonDidTapped() {
+        //TODO: - 목록화면으로 이동
         print("목록보기 버튼 누름")
     }
     
@@ -224,6 +227,11 @@ class MainViewController: UIViewController {
             return
         }
         mapView?.setMapCenter(location, animated: true)
+    }
+    
+    @objc private func infoViewDidTapped() {
+        //TODO: - 상세화면으로 이동
+        print("인포 뷰 누름")
     }
     
     //MARK: - Networking Method
@@ -312,13 +320,18 @@ extension MainViewController: MTMapViewDelegate {
         reverseGeoCoder?.startFindingAddress()
     }
     
-    func mapView(_ mapView: MTMapView!, selectedPOIItem poiItem: MTMapPOIItem!) -> Bool {
-        //TODO: - infoView 표시
+    func mapView(_ mapView: MTMapView?, selectedPOIItem poiItem: MTMapPOIItem?) -> Bool {
+        guard let hospItem = (poiItem?.userObject as? POIItemUserObject<HospitalInfo>)?.item else {
+            return false
+        }
+        
+        // infoView 표시
+        infoView.setHospitalInfo(item: hospItem)
         infoView.isHidden = false
         return true
     }
     
-    func mapView(_ mapView: MTMapView!, touchedCalloutBalloonOf poiItem: MTMapPOIItem!) {
+    func mapView(_ mapView: MTMapView?, touchedCalloutBalloonOf poiItem: MTMapPOIItem?) {
         //TODO: - 상세화면으로 이동
     }
 }

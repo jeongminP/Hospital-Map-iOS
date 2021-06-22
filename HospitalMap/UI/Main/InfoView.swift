@@ -104,4 +104,40 @@ class InfoView: UIView {
             make.trailing.equalToSuperview().offset(-15)
         }
     }
+    
+    func setHospitalInfo(item: HospitalInfo) {
+        if let name = item.hospName {
+            hospNameLabel.text = name
+        }
+        if let code = item.classCodeName {
+            codeNameLabel.text = code
+        }
+        
+        if let addr = item.addr {
+            addressLabel.text = addr
+        }
+        
+        if let tel = item.telNo {
+            telNoLabel.text = tel
+            telNoStackView.isHidden = false
+            verticalStackView.addArrangedSubview(telNoStackView)
+        } else {
+            telNoStackView.isHidden = true
+            verticalStackView.removeArrangedSubview(telNoStackView)
+        }
+        
+        if let url = item.hospUrl {
+            let textRange = NSMakeRange(0, url.count)
+            let attributedString = NSMutableAttributedString.init(string: url)
+            attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: textRange)
+            attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.blue, range: textRange)
+            
+            hospUrlLabel.attributedText = attributedString
+            hospUrlLabel.isHidden = false
+            verticalStackView.addArrangedSubview(hospUrlLabel)
+        } else {
+            hospUrlLabel.isHidden = true
+            verticalStackView.removeArrangedSubview(hospUrlLabel)
+        }
+    }
 }
