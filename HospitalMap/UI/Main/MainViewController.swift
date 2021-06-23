@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import Alamofire
+import CoreLocation
 
 class MainViewController: UIViewController {
     
@@ -18,6 +20,7 @@ class MainViewController: UIViewController {
     private let pickerView = UIPickerView()
     private let infoView = InfoView()
     private var mapView: MTMapView?
+    private var loadingView: LoadingView?
     
     //MARK: - Private Properties - Kakao Map
     private var currentLocation: MTMapPoint?
@@ -30,7 +33,20 @@ class MainViewController: UIViewController {
     private let userDefaultsCurrentDeptKey = "userDefaultsCurrentDeptKey"
     private var currentDept: DepartmendCode = .IM
     private var tmpSelectedRow: Int = 0
-    private var hospitalItemList: [HospitalInfo] = []
+    private var hospitalItemList: [HospitalInfo] = [] {
+        didSet {
+            didSetHospitalItemList()
+        }
+    }
+    
+    fileprivate class POIItemUserObject<T: SearchResultItemType>: NSObject {
+        let item: T
+        
+        init(item: T) {
+            self.item = item
+            super.init()
+        }
+    }
     
     //MARK: - Methods
     override func viewDidLoad() {
@@ -43,9 +59,7 @@ class MainViewController: UIViewController {
         setupShowListButton()
         setupCurrentLocationButton()
         setupInfoView()
-        
-        //TODO: - 로딩 뷰 구현
-        
+        setupLoadingView()
     }
     
     private func setupMapView() {
@@ -125,6 +139,7 @@ class MainViewController: UIViewController {
         showListButton.setTitle("병원 목록 보기", for: .normal)
         showListButton.setTitleColor(UIColor.black, for: .normal)
         showListButton.addTarget(self, action: #selector(showListButtonDidTapped), for: .touchUpInside)
+        showListButton.isUserInteractionEnabled = false
         
         view.addSubview(showListButton)
         
@@ -161,6 +176,8 @@ class MainViewController: UIViewController {
     }
     
     private func setupInfoView() {
+        let infoViewTap = UITapGestureRecognizer(target: self, action: #selector(infoViewDidTapped))
+        infoView.addGestureRecognizer(infoViewTap)
         view.addSubview(infoView)
         
         infoView.snp.makeConstraints { make in
@@ -172,14 +189,27 @@ class MainViewController: UIViewController {
         infoView.isHidden = true
     }
     
+    private func setupLoadingView() {
+        loadingView = LoadingView(frame: view.bounds)
+        guard let loadingView = loadingView else {
+            return
+        }
+        view.addSubview(loadingView)
+        loadingView.stopLoading()
+        
+        loadingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
     @objc private func pickerViewDoneDidTapped() {
         currentDept = departmendCodeArr[tmpSelectedRow]
         choiceDeptView.setDeptLabel(to: currentDept.departmentName)
         UserDefaults.standard.set(currentDept.rawValue, forKey: userDefaultsCurrentDeptKey)
         choiceDeptView.resignFirstResponder()
         
-        //TODO: - API 다시 요청
-        
+        // API 다시 요청
+        requestHospitalList(deptCode: currentDept, emdongName: centerEMDong)
     }
 
     @objc private func pickerViewCancelDidTapped() {
@@ -189,6 +219,7 @@ class MainViewController: UIViewController {
     }
     
     @objc private func showListButtonDidTapped() {
+        //TODO: - 목록화면으로 이동
         print("목록보기 버튼 누름")
     }
     
@@ -197,6 +228,71 @@ class MainViewController: UIViewController {
             return
         }
         mapView?.setMapCenter(location, animated: true)
+    }
+    
+    @objc private func infoViewDidTapped() {
+        //TODO: - 상세화면으로 이동
+        print("인포 뷰 누름")
+    }
+    
+    //MARK: - Networking Method
+    private func requestHospitalList(deptCode: DepartmendCode, emdongName: String) {
+        loadingView?.startLoading()
+        let urlString = "http://apis.data.go.kr/B551182/hospInfoService1/getHospBasisList1?pageNo=1&numOfRows=500&_type=json"
+            + "&dgsbjtCd=" + deptCode.rawValue + "&emdongNm=" + emdongName
+        guard let encodedStr = urlString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed),
+            let url = URL(string: encodedStr + "&ServiceKey=Q%2BbQw%2FUNPpDxP9hAGr3SQzR71t%2BCRCoDcFtPYmxVpEdlObYNjUINxMD3hurNngT3r19ae%2FDHw7t%2B5YhzIm2EuA%3D%3D") else
+        {
+            return
+        }
+        
+        AF.request(url, method: .get)
+            .validate()
+            .responseData { response in
+                switch response.result {
+                case .success(let data):
+                    do {
+                        let res = try JSONDecoder().decode(ResponseStruct<HospitalInfo>.self, from: data)
+                        self.hospitalItemList = res.response?.body?.items?["item"] ?? []
+                    } catch {
+                        NSLog("%s", String(describing: error))
+                    }
+                case .failure(let e):
+                    print(e)
+                }
+            }
+    }
+    
+    private func didSetHospitalItemList() {
+        loadingView?.stopLoading()
+        showListButton.setTitle("병원 목록 보기 (\(hospitalItemList.count))", for: .normal)
+        showListButton.isUserInteractionEnabled = true
+        
+        //TODO: - empty 토스트 메시지 표시
+        
+        mapView?.removeAllPOIItems()
+        for idx in 0..<hospitalItemList.count {
+            let item = hospitalItemList[idx]
+            guard let xPos = item.getXPos(),
+                  let yPos = item.getYPos() else {
+                continue
+            }
+            let marker = MTMapPOIItem()
+            marker.itemName = item.hospName
+            marker.tag = idx
+            marker.userObject = POIItemUserObject(item: item)
+            marker.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: yPos, longitude: xPos))
+            marker.markerType = .bluePin
+            marker.markerSelectedType = .redPin
+            marker.showAnimationType = .springFromGround
+            mapView?.add(marker)
+        }
+    }
+    
+    func distance(from: MTMapPointGeo, to:MTMapPointGeo) -> Double {
+        let fromLoc = CLLocation(latitude: from.latitude, longitude: from.longitude)
+        let toLoc = CLLocation(latitude: to.latitude, longitude: to.longitude)
+        return fromLoc.distance(from: toLoc) / 1000
     }
 }
 
@@ -231,13 +327,25 @@ extension MainViewController: MTMapViewDelegate {
         reverseGeoCoder?.startFindingAddress()
     }
     
-    func mapView(_ mapView: MTMapView!, selectedPOIItem poiItem: MTMapPOIItem!) -> Bool {
-        //TODO: - infoView 표시
+    func mapView(_ mapView: MTMapView?, selectedPOIItem poiItem: MTMapPOIItem?) -> Bool {
+        guard let hospItem = (poiItem?.userObject as? POIItemUserObject<HospitalInfo>)?.item else {
+            return false
+        }
         
+        // infoView 표시
+        var dist: Double?
+        if let curLocGeo = currentLocation?.mapPointGeo(),
+           let xPos = hospItem.getXPos(),
+           let yPos = hospItem.getYPos() {
+            dist = distance(from: curLocGeo, to: MTMapPointGeo(latitude: yPos, longitude: xPos))
+        }
+        
+        infoView.setHospitalInfo(item: hospItem, distance: dist)
+        infoView.isHidden = false
         return true
     }
     
-    func mapView(_ mapView: MTMapView!, touchedCalloutBalloonOf poiItem: MTMapPOIItem!) {
+    func mapView(_ mapView: MTMapView?, touchedCalloutBalloonOf poiItem: MTMapPOIItem?) {
         //TODO: - 상세화면으로 이동
     }
 }
@@ -247,15 +355,14 @@ extension MainViewController: MTMapReverseGeoCoderDelegate {
         guard let addrStr = addressString,
               let newEMDong = parseEMDongNm(from: addrStr),
               centerEMDong != newEMDong else {
-            
-            //TODO: - 로딩뷰 숨기기
-            
+            loadingView?.stopLoading()
             reverseGeoCoder = nil
             return
         }
         
         centerEMDong = newEMDong
         emdView.setTitle(centerEMDong, for: .normal)
+        requestHospitalList(deptCode: currentDept, emdongName: centerEMDong)
         reverseGeoCoder = nil
     }
     

@@ -44,8 +44,11 @@ class InfoView: UIView {
         codeNameLabel.text = "코드명"
         codeNameLabel.textColor = UIColor.darkGray
         codeNameLabel.font = UIFont.systemFont(ofSize: 15)
+        codeNameLabel.lineBreakMode = .byWordWrapping
+        codeNameLabel.numberOfLines = 0
         
         let spaceView = UILabel()
+        spaceView.font = UIFont.systemFont(ofSize: 10)
         spaceView.text = " "
         
         if let image = UIImage.init(named: "SF_phone_down_fill") {
@@ -59,6 +62,10 @@ class InfoView: UIView {
         
         addressLabel.text = "주소"
         addressLabel.textColor = UIColor.black
+        addressLabel.font = UIFont.systemFont(ofSize: 15)
+        addressLabel.lineBreakMode = .byWordWrapping
+        addressLabel.numberOfLines = 0
+        
         telNoLabel.text = "000-0000-0000"
         telNoLabel.textColor = UIColor.red
         
@@ -68,18 +75,23 @@ class InfoView: UIView {
         attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: textRange)
         attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.blue, range: textRange)
         hospUrlLabel.attributedText = attributedString
+        hospUrlLabel.isUserInteractionEnabled = true
+        
+        let hospUrlTap = UITapGestureRecognizer(target: self, action: #selector(hospUrlLabelDidTapped))
+        hospUrlLabel.addGestureRecognizer(hospUrlTap)
         
         hospNameStackView.addArrangedSubview(hospNameLabel)
-        hospNameStackView.addArrangedSubview(distanceLabel)
+        
         telNoStackView.addArrangedSubview(callImageView)
         telNoStackView.addArrangedSubview(telNoLabel)
+        telNoStackView.isUserInteractionEnabled = true
+        let telNoTap = UITapGestureRecognizer(target: self, action: #selector(telNoStackViewDidTapped))
+        telNoStackView.addGestureRecognizer(telNoTap)
         
         verticalStackView.addArrangedSubview(hospNameStackView)
         verticalStackView.addArrangedSubview(codeNameLabel)
         verticalStackView.addArrangedSubview(spaceView)
         verticalStackView.addArrangedSubview(addressLabel)
-        verticalStackView.addArrangedSubview(telNoStackView)
-        verticalStackView.addArrangedSubview(hospUrlLabel)
         
         setupStackView()
     }
@@ -95,6 +107,7 @@ class InfoView: UIView {
         
         verticalStackView.axis = .vertical
         verticalStackView.alignment = .leading
+        verticalStackView.spacing = 3
         addSubview(verticalStackView)
         
         verticalStackView.snp.makeConstraints { make in
@@ -102,6 +115,74 @@ class InfoView: UIView {
             make.bottom.equalToSuperview().offset(-10)
             make.leading.equalToSuperview().offset(15)
             make.trailing.equalToSuperview().offset(-15)
+        }
+    }
+    
+    @objc private func telNoStackViewDidTapped() {
+        guard let telNo = telNoLabel.text,
+              let url = URL(string: "tel://" + telNo) else {
+            return
+        }
+        
+        UIApplication.shared.open(url,
+                                  options: [:],
+                                  completionHandler: { success in })
+    }
+    
+    @objc private func hospUrlLabelDidTapped() {
+        guard let hospUrl = hospUrlLabel.text,
+              let url = URL(string: hospUrl) else {
+            return
+        }
+        
+        UIApplication.shared.open(url,
+                                  options: [:],
+                                  completionHandler: { success in })
+    }
+    
+    func setHospitalInfo(item: HospitalInfo, distance: Double?) {
+        if let name = item.hospName {
+            hospNameLabel.text = name
+        }
+        
+        if let code = item.classCodeName {
+            codeNameLabel.text = code
+        }
+        
+        if let addr = item.addr {
+            addressLabel.text = addr
+        }
+        
+        if let tel = item.telNo {
+            telNoLabel.text = tel
+            telNoStackView.isHidden = false
+            verticalStackView.addArrangedSubview(telNoStackView)
+        } else {
+            telNoStackView.isHidden = true
+            verticalStackView.removeArrangedSubview(telNoStackView)
+        }
+        
+        if let url = item.hospUrl {
+            let textRange = NSMakeRange(0, url.count)
+            let attributedString = NSMutableAttributedString.init(string: url)
+            attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: textRange)
+            attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.blue, range: textRange)
+            
+            hospUrlLabel.attributedText = attributedString
+            hospUrlLabel.isHidden = false
+            verticalStackView.addArrangedSubview(hospUrlLabel)
+        } else {
+            hospUrlLabel.isHidden = true
+            verticalStackView.removeArrangedSubview(hospUrlLabel)
+        }
+        
+        if let distance = distance {
+            distanceLabel.text = String(format: "%.2f km", distance)
+            distanceLabel.isHidden = false
+            hospNameStackView.addArrangedSubview(distanceLabel)
+        } else {
+            distanceLabel.isHidden = true
+            hospNameStackView.removeArrangedSubview(distanceLabel)
         }
     }
 }
