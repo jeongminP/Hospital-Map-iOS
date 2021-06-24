@@ -62,6 +62,10 @@ class MainViewController: UIViewController {
         setupLoadingView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     private func setupMapView() {
         mapView = MTMapView(frame: view.bounds)
         guard let mapView = mapView else {
@@ -219,8 +223,8 @@ class MainViewController: UIViewController {
     }
     
     @objc private func showListButtonDidTapped() {
-        //TODO: - 목록화면으로 이동
-        print("목록보기 버튼 누름")
+        let hospitalTableVC = HospitalTableViewController(hospitalList: hospitalItemList, emdongName: centerEMDong, deptName: currentDept.departmentName)
+        navigationController?.pushViewController(hospitalTableVC, animated: true)
     }
     
     @objc private func currentLocationButtonDidTapped() {
