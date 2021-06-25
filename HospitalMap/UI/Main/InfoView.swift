@@ -37,6 +37,7 @@ class InfoView: UIView {
         hospNameLabel.text = "병원 이름"
         hospNameLabel.textColor = UIColor.black
         hospNameLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        
         distanceLabel.text = "거리"
         distanceLabel.textColor = UIColor.darkGray
         distanceLabel.font = UIFont.systemFont(ofSize: 15)
@@ -69,6 +70,9 @@ class InfoView: UIView {
         telNoLabel.text = "000-0000-0000"
         telNoLabel.textColor = UIColor.red
         
+        hospUrlLabel.lineBreakMode = .byWordWrapping
+        hospUrlLabel.numberOfLines = 0
+        
         let hospUrlText = "홈페이지 주소"
         let textRange = NSMakeRange(0, hospUrlText.count)
         let attributedString = NSMutableAttributedString.init(string: hospUrlText)
@@ -100,6 +104,7 @@ class InfoView: UIView {
         hospNameStackView.axis = .horizontal
         hospNameStackView.alignment = .bottom
         hospNameStackView.spacing = 10
+        hospNameStackView.distribution = .fillProportionally
         
         telNoStackView.axis = .horizontal
         telNoStackView.alignment = .center

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="126" id="KGk-i7-Jjw" customClass="HospitalTableViewCell" customModule="HospitalMap" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2si-96-jnT">
+                        <rect key="frame" x="10" y="5" width="300" height="116"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="xz3-q2-qjb">
+                                <rect key="frame" x="10" y="10" width="280" height="96"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="병원명" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5F-rZ-wwC">
+                                        <rect key="frame" x="0.0" y="0.0" width="52" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FYe-cK-SXo">
+                                        <rect key="frame" x="0.0" y="24.5" width="3" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="주소" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7MF-hL-Pss">
+                                        <rect key="frame" x="0.0" y="36.5" width="26" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="O5z-cx-ct4">
+                                        <rect key="frame" x="0.0" y="55" width="79" height="20.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SF_phone_down_fill" translatesAutoresizingMaskIntoConstraints="NO" id="aSb-gf-ZPR">
+                                                <rect key="frame" x="0.0" y="2.5" width="15" height="15"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="15" id="Xhu-3g-FKl"/>
+                                                    <constraint firstAttribute="width" constant="15" id="wGj-Kn-INL"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전화번호" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LwU-eI-Ehv">
+                                                <rect key="frame" x="20" y="0.0" width="59" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" systemColor="systemRedColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="홈페이지 주소" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L86-EU-B8P">
+                                        <rect key="frame" x="0.0" y="75.5" width="93" height="20.5"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                        <color key="textColor" systemColor="systemBlueColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xz3-q2-qjb" firstAttribute="top" secondItem="2si-96-jnT" secondAttribute="top" constant="10" id="HF7-M3-egk"/>
+                            <constraint firstAttribute="bottom" secondItem="xz3-q2-qjb" secondAttribute="bottom" constant="10" id="UBb-1U-trI"/>
+                            <constraint firstAttribute="trailing" secondItem="xz3-q2-qjb" secondAttribute="trailing" constant="10" id="aUb-mH-RFf"/>
+                            <constraint firstItem="xz3-q2-qjb" firstAttribute="leading" secondItem="2si-96-jnT" secondAttribute="leading" constant="10" id="ddl-lP-HVB"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" systemColor="systemGray5Color"/>
+                <constraints>
+                    <constraint firstItem="2si-96-jnT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="9Dw-dd-c1g"/>
+                    <constraint firstAttribute="bottom" secondItem="2si-96-jnT" secondAttribute="bottom" constant="5" id="Uct-Pd-hgw"/>
+                    <constraint firstAttribute="trailing" secondItem="2si-96-jnT" secondAttribute="trailing" constant="10" id="d12-mj-zey"/>
+                    <constraint firstItem="2si-96-jnT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="syY-jH-GIb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="addressLabel" destination="7MF-hL-Pss" id="T2K-1f-yMk"/>
+                <outlet property="callImageView" destination="aSb-gf-ZPR" id="ley-GC-iCk"/>
+                <outlet property="hospNameLabel" destination="K5F-rZ-wwC" id="ERv-59-2Fc"/>
+                <outlet property="hospUrlLabel" destination="L86-EU-B8P" id="69O-XN-rTT"/>
+                <outlet property="roundView" destination="2si-96-jnT" id="unm-dS-p8l"/>
+                <outlet property="telNoLabel" destination="LwU-eI-Ehv" id="LKN-QG-EnG"/>
+                <outlet property="telNoStackView" destination="O5z-cx-ct4" id="9O9-Rq-I00"/>
+                <outlet property="verticalStackView" destination="xz3-q2-qjb" id="gKe-Dp-ODm"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="107.14285714285714"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="SF_phone_down_fill" width="44" height="44"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

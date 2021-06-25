@@ -11,6 +11,9 @@
 		167BB1122679C93A0012DF76 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BB1112679C93A0012DF76 /* InfoView.swift */; };
 		167BB11726805C140012DF76 /* icon_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 167BB11626805C140012DF76 /* icon_loading.png */; };
 		167BB119268171A00012DF76 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BB118268171A00012DF76 /* LoadingView.swift */; };
+		167BB11D26844FF00012DF76 /* HospitalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BB11B26844FF00012DF76 /* HospitalTableViewCell.swift */; };
+		167BB11E26844FF00012DF76 /* HospitalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 167BB11C26844FF00012DF76 /* HospitalTableViewCell.xib */; };
+		167BB1222684546E0012DF76 /* HospitalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BB1212684546E0012DF76 /* HospitalTableViewController.swift */; };
 		25850BF62678D28900E09246 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25850BF52678D28900E09246 /* Extension.swift */; };
 		25850BF82678D2BE00E09246 /* ChoiceDeptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25850BF72678D2BE00E09246 /* ChoiceDeptView.swift */; };
 		259E56F226731C1A0042A853 /* DepartmentCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259E56F126731C1A0042A853 /* DepartmentCode.swift */; };
@@ -114,6 +117,9 @@
 		167BB1112679C93A0012DF76 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		167BB11626805C140012DF76 /* icon_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_loading.png; sourceTree = "<group>"; };
 		167BB118268171A00012DF76 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		167BB11B26844FF00012DF76 /* HospitalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HospitalTableViewCell.swift; sourceTree = "<group>"; };
+		167BB11C26844FF00012DF76 /* HospitalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HospitalTableViewCell.xib; sourceTree = "<group>"; };
+		167BB1212684546E0012DF76 /* HospitalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HospitalTableViewController.swift; sourceTree = "<group>"; };
 		25850BF52678D28900E09246 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		25850BF72678D2BE00E09246 /* ChoiceDeptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceDeptView.swift; sourceTree = "<group>"; };
 		259E56F126731C1A0042A853 /* DepartmentCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentCode.swift; sourceTree = "<group>"; };
@@ -249,6 +255,16 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		167BB11A26844F600012DF76 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				167BB11B26844FF00012DF76 /* HospitalTableViewCell.swift */,
+				167BB11C26844FF00012DF76 /* HospitalTableViewCell.xib */,
+				167BB1212684546E0012DF76 /* HospitalTableViewController.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
 		259E56EF26731BE80042A853 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +279,7 @@
 		259E56F026731BEE0042A853 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				167BB11A26844F600012DF76 /* List */,
 				167BB1132679C9400012DF76 /* Main */,
 			);
 			path = UI;
@@ -528,6 +545,7 @@
 				25B92BF42671EC81004372DA /* map_present_tracking.png in Resources */,
 				25B92BE22671EC81004372DA /* detail_button.png in Resources */,
 				25B92C082671EC81004372DA /* noimage.png in Resources */,
+				167BB11E26844FF00012DF76 /* HospitalTableViewCell.xib in Resources */,
 				25B92BEC2671EC81004372DA /* th_line.png in Resources */,
 				25B92BFE2671EC81004372DA /* info_box_tail.png in Resources */,
 				25B92BDC2671EC81004372DA /* map_pin_custom.png in Resources */,
@@ -698,9 +716,11 @@
 			files = (
 				25850BF62678D28900E09246 /* Extension.swift in Sources */,
 				259E56FA26731F420042A853 /* HospitalInfo.swift in Sources */,
+				167BB1222684546E0012DF76 /* HospitalTableViewController.swift in Sources */,
 				25850BF82678D2BE00E09246 /* ChoiceDeptView.swift in Sources */,
 				167BB119268171A00012DF76 /* LoadingView.swift in Sources */,
 				259E570D26732CE50042A853 /* HospDetailInfo.swift in Sources */,
+				167BB11D26844FF00012DF76 /* HospitalTableViewCell.swift in Sources */,
 				25B92C3A2671F389004372DA /* MainViewController.swift in Sources */,
 				25B92B5E2671E521004372DA /* AppDelegate.swift in Sources */,
 				259E56F226731C1A0042A853 /* DepartmentCode.swift in Sources */,
