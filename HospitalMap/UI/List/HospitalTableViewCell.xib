@@ -78,7 +78,7 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" systemColor="systemGray3Color"/>
+                <color key="backgroundColor" systemColor="systemGray5Color"/>
                 <constraints>
                     <constraint firstItem="2si-96-jnT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="9Dw-dd-c1g"/>
                     <constraint firstAttribute="bottom" secondItem="2si-96-jnT" secondAttribute="bottom" constant="5" id="Uct-Pd-hgw"/>
@@ -92,6 +92,7 @@
                 <outlet property="callImageView" destination="aSb-gf-ZPR" id="ley-GC-iCk"/>
                 <outlet property="hospNameLabel" destination="K5F-rZ-wwC" id="ERv-59-2Fc"/>
                 <outlet property="hospUrlLabel" destination="L86-EU-B8P" id="69O-XN-rTT"/>
+                <outlet property="roundView" destination="2si-96-jnT" id="unm-dS-p8l"/>
                 <outlet property="telNoLabel" destination="LwU-eI-Ehv" id="LKN-QG-EnG"/>
                 <outlet property="telNoStackView" destination="O5z-cx-ct4" id="9O9-Rq-I00"/>
                 <outlet property="verticalStackView" destination="xz3-q2-qjb" id="gKe-Dp-ODm"/>
@@ -107,8 +108,8 @@
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

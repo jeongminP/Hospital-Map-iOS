@@ -259,6 +259,7 @@ class MainViewController: UIViewController {
                         let res = try JSONDecoder().decode(ResponseStruct<HospitalInfo>.self, from: data)
                         self.hospitalItemList = res.response?.body?.items?["item"] ?? []
                     } catch {
+                        self.hospitalItemList = []
                         NSLog("%s", String(describing: error))
                     }
                 case .failure(let e):

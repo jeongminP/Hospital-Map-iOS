@@ -9,6 +9,8 @@ import UIKit
 
 class HospitalTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet private var roundView: UIView?
     @IBOutlet private var verticalStackView: UIStackView?
     @IBOutlet private var telNoStackView: UIStackView?
     @IBOutlet private var hospNameLabel: UILabel?
@@ -27,7 +29,12 @@ class HospitalTableViewCell: UITableViewCell {
     }
     
     private func setupLayout() {
+        roundView?.layer.cornerRadius = 5
+        
+        hospNameLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         hospNameLabel?.textColor = UIColor.black
+        hospNameLabel?.lineBreakMode = .byWordWrapping
+        hospNameLabel?.numberOfLines = 0
         
         if let image = UIImage.init(named: "SF_phone_down_fill") {
             let imageSize: CGSize = CGSize(width: 15, height: 15)
@@ -42,6 +49,9 @@ class HospitalTableViewCell: UITableViewCell {
         addressLabel?.numberOfLines = 0
         
         telNoLabel?.textColor = UIColor.red
+        
+        hospUrlLabel?.lineBreakMode = .byWordWrapping
+        hospUrlLabel?.numberOfLines = 0
     }
     
     func setHospitalInfo(item: HospitalInfo) {

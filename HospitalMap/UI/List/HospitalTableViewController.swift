@@ -13,6 +13,8 @@ class HospitalTableViewController: UIViewController {
     private let hospitalList: [HospitalInfo]
     private let emdongName, deptName: String
     private let tableView = UITableView()
+    private let emptyView = UIView()
+    private let emptyLabel = UILabel()
     private let hospitalCellID = "HospitalTableViewCell"
     
     init(hospitalList: [HospitalInfo], emdongName: String, deptName: String) {
@@ -28,15 +30,18 @@ class HospitalTableViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupLayout()
+    }
+    
+    private func setupLayout() {
         navigationController?.isNavigationBarHidden = false
         self.title = emdongName + " " + deptName + " : \(hospitalList.count)건"
-        view.backgroundColor = .systemGray3
-        tableView.backgroundColor = .systemGray3
         
+        // table view 구현
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .systemGray5
         
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
@@ -45,6 +50,22 @@ class HospitalTableViewController: UIViewController {
         
         let cell = UINib(nibName: hospitalCellID, bundle: nil)
         tableView.register(cell, forCellReuseIdentifier: hospitalCellID)
+        
+        // empty view 구현
+        emptyLabel.text = "일치하는 검색 결과가 없습니다."
+        emptyView.addSubview(emptyLabel)
+        emptyLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
+        emptyView.backgroundColor = .systemGray5
+        view.addSubview(emptyView)
+        emptyView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        if !hospitalList.isEmpty {
+            emptyView.isHidden = true
+        }
     }
 }
 
