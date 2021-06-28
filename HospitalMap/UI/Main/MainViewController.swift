@@ -208,6 +208,7 @@ class MainViewController: UIViewController {
     }
     
     @objc private func pickerViewDoneDidTapped() {
+        infoView.isHidden = true
         currentDept = departmendCodeArr[tmpSelectedRow]
         choiceDeptView.setDeptLabel(to: currentDept.departmentName)
         UserDefaults.standard.set(currentDept.rawValue, forKey: userDefaultsCurrentDeptKey)

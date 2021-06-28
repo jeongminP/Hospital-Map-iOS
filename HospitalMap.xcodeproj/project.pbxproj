@@ -15,7 +15,7 @@
 		167BB11D26844FF00012DF76 /* HospitalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BB11B26844FF00012DF76 /* HospitalTableViewCell.swift */; };
 		167BB11E26844FF00012DF76 /* HospitalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 167BB11C26844FF00012DF76 /* HospitalTableViewCell.xib */; };
 		167BB1222684546E0012DF76 /* HospitalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BB1212684546E0012DF76 /* HospitalTableViewController.swift */; };
-		167BB115268050760012DF76 /* hdb.db in Resources */ = {isa = PBXBuildFile; fileRef = 167BB114268050760012DF76 /* hdb.db */; };
+		167BB124268995130012DF76 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 167BB123268995130012DF76 /* Metal.framework */; };
 		25850BF62678D28900E09246 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25850BF52678D28900E09246 /* Extension.swift */; };
 		25850BF82678D2BE00E09246 /* ChoiceDeptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25850BF72678D2BE00E09246 /* ChoiceDeptView.swift */; };
 		25850BFC2682D27E00E09246 /* HospitalDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25850BFB2682D27E00E09246 /* HospitalDBManager.swift */; };
@@ -86,7 +86,6 @@
 		25B92C0F2671EC81004372DA /* map_pin_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B92BD82671EC81004372DA /* map_pin_shadow.png */; };
 		25B92C102671EC81004372DA /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B92BD92671EC81004372DA /* DaumMap.framework */; };
 		25B92C112671EC81004372DA /* DaumMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B92BD92671EC81004372DA /* DaumMap.framework */; };
-		25B92C192671ECF7004372DA /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B92C182671ECF7004372DA /* OpenGLES.framework */; };
 		25B92C1B2671ED09004372DA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B92C1A2671ED09004372DA /* SystemConfiguration.framework */; };
 		25B92C1D2671ED13004372DA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B92C1C2671ED13004372DA /* CoreLocation.framework */; };
 		25B92C1F2671ED1D004372DA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25B92C1E2671ED1D004372DA /* QuartzCore.framework */; };
@@ -124,7 +123,7 @@
 		167BB11B26844FF00012DF76 /* HospitalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HospitalTableViewCell.swift; sourceTree = "<group>"; };
 		167BB11C26844FF00012DF76 /* HospitalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HospitalTableViewCell.xib; sourceTree = "<group>"; };
 		167BB1212684546E0012DF76 /* HospitalTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HospitalTableViewController.swift; sourceTree = "<group>"; };
-		167BB114268050760012DF76 /* hdb.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = hdb.db; sourceTree = "<group>"; };
+		167BB123268995130012DF76 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		25850BF52678D28900E09246 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		25850BF72678D2BE00E09246 /* ChoiceDeptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceDeptView.swift; sourceTree = "<group>"; };
 		25850BFB2682D27E00E09246 /* HospitalDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HospitalDBManager.swift; sourceTree = "<group>"; };
@@ -206,12 +205,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				25B92C2B2671ED54004372DA /* libsqlite3.tbd in Frameworks */,
+				167BB124268995130012DF76 /* Metal.framework in Frameworks */,
 				25B92C262671ED4B004372DA /* libxml2.tbd in Frameworks */,
 				25B92C212671ED3E004372DA /* libc++.tbd in Frameworks */,
 				25B92C1F2671ED1D004372DA /* QuartzCore.framework in Frameworks */,
 				25B92C1D2671ED13004372DA /* CoreLocation.framework in Frameworks */,
 				25B92C1B2671ED09004372DA /* SystemConfiguration.framework in Frameworks */,
-				25B92C192671ECF7004372DA /* OpenGLES.framework in Frameworks */,
 				25B92C102671EC81004372DA /* DaumMap.framework in Frameworks */,
 				6173AB75F834FECFE234EC0A /* Pods_HospitalMap.framework in Frameworks */,
 			);
@@ -413,6 +412,7 @@
 		BFC27987D39E66FC71BE4CE7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				167BB123268995130012DF76 /* Metal.framework */,
 				25B92C2A2671ED54004372DA /* libsqlite3.tbd */,
 				25B92C252671ED4B004372DA /* libxml2.tbd */,
 				25B92C202671ED3E004372DA /* libc++.tbd */,

@@ -156,7 +156,6 @@ class InfoView: UIView {
         hospNameStackView.axis = .horizontal
         hospNameStackView.alignment = .bottom
         hospNameStackView.spacing = 10
-        hospNameStackView.distribution = .fillProportionally
         
         telNoStackView.axis = .horizontal
         telNoStackView.alignment = .center
