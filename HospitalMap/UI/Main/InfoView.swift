@@ -18,6 +18,7 @@ class InfoView: UIView {
     private let callImageView = UIImageView()
     private let telNoLabel = UILabel()
     private let hospUrlLabel = UILabel()
+    private(set) var hospitalInfo: HospitalInfo?
     
     //MARK: - internal methods
     override init(frame: CGRect) {

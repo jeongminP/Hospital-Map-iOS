@@ -225,6 +225,7 @@ class MainViewController: UIViewController {
     }
     
     @objc private func showListButtonDidTapped() {
+        // 목록화면으로 이동
         let hospitalTableVC = HospitalTableViewController(hospitalList: hospitalItemList, emdongName: centerEMDong, deptName: currentDept.departmentName)
         navigationController?.pushViewController(hospitalTableVC, animated: true)
     }
@@ -237,8 +238,12 @@ class MainViewController: UIViewController {
     }
     
     @objc private func infoViewDidTapped() {
-        //TODO: - 상세화면으로 이동
-        print("인포 뷰 누름")
+        // 상세화면으로 이동
+        guard let item = infoView.hospitalInfo else {
+            return
+        }
+        let detailVC = DetailViewController(hospitalInfoItem: item)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     private func fetchHospitalList(deptCode: DepartmendCode, emdongName: String) {
@@ -356,7 +361,12 @@ extension MainViewController: MTMapViewDelegate {
     }
     
     func mapView(_ mapView: MTMapView?, touchedCalloutBalloonOf poiItem: MTMapPOIItem?) {
-        //TODO: - 상세화면으로 이동
+        // 상세화면으로 이동
+        guard let item = infoView.hospitalInfo else {
+            return
+        }
+        let detailVC = DetailViewController(hospitalInfoItem: item)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
