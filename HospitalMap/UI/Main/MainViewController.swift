@@ -29,6 +29,7 @@ class MainViewController: UIViewController {
     private var lastSelectedItem: MTMapPOIItem?
     
     //MARK: - Private Properties
+    private let dbManager = HospitalDBManager()
     private let departmendCodeArr = DepartmendCode.allCases
     private let userDefaultsCurrentDeptKey = "userDefaultsCurrentDeptKey"
     private var currentDept: DepartmendCode = .IM
@@ -212,8 +213,8 @@ class MainViewController: UIViewController {
         UserDefaults.standard.set(currentDept.rawValue, forKey: userDefaultsCurrentDeptKey)
         choiceDeptView.resignFirstResponder()
         
-        // API 다시 요청
-        requestHospitalList(deptCode: currentDept, emdongName: centerEMDong)
+        // DB 쿼리 재실행
+        fetchHospitalList(deptCode: currentDept, emdongName: centerEMDong)
     }
 
     @objc private func pickerViewCancelDidTapped() {
@@ -239,33 +240,16 @@ class MainViewController: UIViewController {
         print("인포 뷰 누름")
     }
     
-    //MARK: - Networking Method
-    private func requestHospitalList(deptCode: DepartmendCode, emdongName: String) {
+    private func fetchHospitalList(deptCode: DepartmendCode, emdongName: String) {
         loadingView?.startLoading()
-        let urlString = "http://apis.data.go.kr/B551182/hospInfoService1/getHospBasisList1?pageNo=1&numOfRows=500&_type=json"
-            + "&dgsbjtCd=" + deptCode.rawValue + "&emdongNm=" + emdongName
-        guard let encodedStr = urlString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed),
-            let url = URL(string: encodedStr + "&ServiceKey=Q%2BbQw%2FUNPpDxP9hAGr3SQzR71t%2BCRCoDcFtPYmxVpEdlObYNjUINxMD3hurNngT3r19ae%2FDHw7t%2B5YhzIm2EuA%3D%3D") else
-        {
-            return
-        }
-        
-        AF.request(url, method: .get)
-            .validate()
-            .responseData { response in
-                switch response.result {
-                case .success(let data):
-                    do {
-                        let res = try JSONDecoder().decode(ResponseStruct<HospitalInfo>.self, from: data)
-                        self.hospitalItemList = res.response?.body?.items?["item"] ?? []
-                    } catch {
-                        self.hospitalItemList = []
-                        NSLog("%s", String(describing: error))
-                    }
-                case .failure(let e):
-                    print(e)
-                }
+        dbManager.getHospitalList(clCd: deptCode.rawValue, emdongNm: emdongName) { [weak self] hospitalList, success in
+            guard success else {
+                return
             }
+            DispatchQueue.main.async {
+                self?.hospitalItemList = hospitalList
+            }
+        }
     }
     
     private func didSetHospitalItemList() {
@@ -333,11 +317,30 @@ extension MainViewController: MTMapViewDelegate {
     }
     
     func mapView(_ mapView: MTMapView?, selectedPOIItem poiItem: MTMapPOIItem?) -> Bool {
-        guard let hospItem = (poiItem?.userObject as? POIItemUserObject<HospitalInfo>)?.item else {
+        guard let hospItem = (poiItem?.userObject as? POIItemUserObject<HospitalInfo>)?.item,
+              let clCdNm = hospItem.classCodeName,
+              let ykiho = hospItem.ykiho else {
             return false
         }
         
-        // infoView 표시
+        // DB에서 진료과 검색
+        dbManager.getDgsbjtList(ykiho: ykiho) { [weak self] dgsbjtList, success in
+            guard let strongSelf = self else {
+                return
+            }
+            var dgsbjtStr = dgsbjtList.reduce("") {
+                $0 + $1 + ", "
+            }
+            if !dgsbjtStr.isEmpty {
+                let range = dgsbjtStr.index(dgsbjtStr.endIndex, offsetBy: -2)..<dgsbjtStr.endIndex
+                dgsbjtStr.removeSubrange(range)
+            }
+            DispatchQueue.main.async {
+                strongSelf.infoView.setCodeNameLabel(clCdNm: clCdNm, dgsbjtStr: dgsbjtStr)
+            }
+        }
+        
+        // 거리 계산
         var dist: Double?
         if let curLocGeo = currentLocation?.mapPointGeo(),
            let xPos = hospItem.getXPos(),
@@ -345,6 +348,7 @@ extension MainViewController: MTMapViewDelegate {
             dist = distance(from: curLocGeo, to: MTMapPointGeo(latitude: yPos, longitude: xPos))
         }
         
+        // infoView 표시
         infoView.setHospitalInfo(item: hospItem, distance: dist)
         infoView.isHidden = false
         return true
@@ -367,7 +371,7 @@ extension MainViewController: MTMapReverseGeoCoderDelegate {
         
         centerEMDong = newEMDong
         emdView.setTitle(centerEMDong, for: .normal)
-        requestHospitalList(deptCode: currentDept, emdongName: centerEMDong)
+        fetchHospitalList(deptCode: currentDept, emdongName: centerEMDong)
         reverseGeoCoder = nil
     }
     

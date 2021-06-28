@@ -19,6 +19,7 @@ class InfoView: UIView {
     private let telNoLabel = UILabel()
     private let hospUrlLabel = UILabel()
     
+    //MARK: - internal methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -28,6 +29,57 @@ class InfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setHospitalInfo(item: HospitalInfo, distance: Double?) {
+        if let name = item.hospName {
+            hospNameLabel.text = name
+        }
+        
+        if let code = item.classCodeName {
+            codeNameLabel.text = code
+        }
+        
+        if let addr = item.addr {
+            addressLabel.text = addr
+        }
+        
+        if let tel = item.telNo {
+            telNoLabel.text = tel
+            telNoStackView.isHidden = false
+            verticalStackView.addArrangedSubview(telNoStackView)
+        } else {
+            telNoStackView.isHidden = true
+            verticalStackView.removeArrangedSubview(telNoStackView)
+        }
+        
+        if let url = item.hospUrl {
+            let textRange = NSMakeRange(0, url.count)
+            let attributedString = NSMutableAttributedString.init(string: url)
+            attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: textRange)
+            attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.blue, range: textRange)
+            
+            hospUrlLabel.attributedText = attributedString
+            hospUrlLabel.isHidden = false
+            verticalStackView.addArrangedSubview(hospUrlLabel)
+        } else {
+            hospUrlLabel.isHidden = true
+            verticalStackView.removeArrangedSubview(hospUrlLabel)
+        }
+        
+        if let distance = distance {
+            distanceLabel.text = String(format: "%.2f km", distance)
+            distanceLabel.isHidden = false
+            hospNameStackView.addArrangedSubview(distanceLabel)
+        } else {
+            distanceLabel.isHidden = true
+            hospNameStackView.removeArrangedSubview(distanceLabel)
+        }
+    }
+    
+    func setCodeNameLabel(clCdNm: String, dgsbjtStr: String) {
+        codeNameLabel.text = clCdNm + " | " + dgsbjtStr
+    }
+    
+    //MARK: - private methods
     private func setupLayout() {
         backgroundColor = UIColor.white
         layer.cornerRadius = 7
@@ -143,51 +195,5 @@ class InfoView: UIView {
         UIApplication.shared.open(url,
                                   options: [:],
                                   completionHandler: { success in })
-    }
-    
-    func setHospitalInfo(item: HospitalInfo, distance: Double?) {
-        if let name = item.hospName {
-            hospNameLabel.text = name
-        }
-        
-        if let code = item.classCodeName {
-            codeNameLabel.text = code
-        }
-        
-        if let addr = item.addr {
-            addressLabel.text = addr
-        }
-        
-        if let tel = item.telNo {
-            telNoLabel.text = tel
-            telNoStackView.isHidden = false
-            verticalStackView.addArrangedSubview(telNoStackView)
-        } else {
-            telNoStackView.isHidden = true
-            verticalStackView.removeArrangedSubview(telNoStackView)
-        }
-        
-        if let url = item.hospUrl {
-            let textRange = NSMakeRange(0, url.count)
-            let attributedString = NSMutableAttributedString.init(string: url)
-            attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: textRange)
-            attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.blue, range: textRange)
-            
-            hospUrlLabel.attributedText = attributedString
-            hospUrlLabel.isHidden = false
-            verticalStackView.addArrangedSubview(hospUrlLabel)
-        } else {
-            hospUrlLabel.isHidden = true
-            verticalStackView.removeArrangedSubview(hospUrlLabel)
-        }
-        
-        if let distance = distance {
-            distanceLabel.text = String(format: "%.2f km", distance)
-            distanceLabel.isHidden = false
-            hospNameStackView.addArrangedSubview(distanceLabel)
-        } else {
-            distanceLabel.isHidden = true
-            hospNameStackView.removeArrangedSubview(distanceLabel)
-        }
     }
 }

@@ -54,10 +54,10 @@ struct HospitalInfo: SearchResultItemType {
         case hospUrl
         case estbDate = "estbDd"
         case doctorTotalCnt = "drTotCnt"
-        case specialistDoctorCnt = "mdeptSdrCnt"
-        case generalDoctorCnt = "mdeptGdrCnt"
-        case residentCnt = "mdeptResdntCnt"
-        case internCnt = "mdeptIntnCnt"
+        case specialistDoctorCnt = "sdrCnt"
+        case generalDoctorCnt = "gdrCnt"
+        case residentCnt = "resdntCnt"
+        case internCnt = "intnCnt"
         case xPos = "XPos"
         case yPos = "YPos"
     }
