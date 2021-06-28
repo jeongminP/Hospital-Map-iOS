@@ -317,11 +317,30 @@ extension MainViewController: MTMapViewDelegate {
     }
     
     func mapView(_ mapView: MTMapView?, selectedPOIItem poiItem: MTMapPOIItem?) -> Bool {
-        guard let hospItem = (poiItem?.userObject as? POIItemUserObject<HospitalInfo>)?.item else {
+        guard let hospItem = (poiItem?.userObject as? POIItemUserObject<HospitalInfo>)?.item,
+              let clCdNm = hospItem.classCodeName,
+              let ykiho = hospItem.ykiho else {
             return false
         }
         
-        // infoView 표시
+        // DB에서 진료과 검색
+        dbManager.getDgsbjtList(ykiho: ykiho) { [weak self] dgsbjtList, success in
+            guard let strongSelf = self else {
+                return
+            }
+            var dgsbjtStr = dgsbjtList.reduce("") {
+                $0 + $1 + ", "
+            }
+            if !dgsbjtStr.isEmpty {
+                let range = dgsbjtStr.index(dgsbjtStr.endIndex, offsetBy: -2)..<dgsbjtStr.endIndex
+                dgsbjtStr.removeSubrange(range)
+            }
+            DispatchQueue.main.async {
+                strongSelf.infoView.setCodeNameLabel(clCdNm: clCdNm, dgsbjtStr: dgsbjtStr)
+            }
+        }
+        
+        // 거리 계산
         var dist: Double?
         if let curLocGeo = currentLocation?.mapPointGeo(),
            let xPos = hospItem.getXPos(),
@@ -329,6 +348,7 @@ extension MainViewController: MTMapViewDelegate {
             dist = distance(from: curLocGeo, to: MTMapPointGeo(latitude: yPos, longitude: xPos))
         }
         
+        // infoView 표시
         infoView.setHospitalInfo(item: hospItem, distance: dist)
         infoView.isHidden = false
         return true

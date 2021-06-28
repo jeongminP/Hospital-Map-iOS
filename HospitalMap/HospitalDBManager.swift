@@ -37,6 +37,7 @@ final class HospitalDBManager {
         + "cdiagDrCnt integer);"
     private let sqlSearchHosp = "SELECT * "
         + "FROM tb_hospbasislist a INNER JOIN tb_dgsbjt b ON a.ykiho = b.ykiho "
+    private let sqlDgsbjt = "SELECT * FROM tb_dgsbjt WHERE ykiho = "
     
     private var dbPath = ""
     private var db: OpaquePointer?
@@ -153,7 +154,6 @@ final class HospitalDBManager {
                 }
                 if let dgsbjtCdNmCol = sqlite3_column_text(queryStmt, 19) {
                     dgsbjtCdNm = String(cString: dgsbjtCdNmCol)
-                    print("진료과: " + (dgsbjtCdNm ?? ""))
                 }
                 
                 guard let xPos = xPos,
@@ -175,6 +175,40 @@ final class HospitalDBManager {
                                             xPos: HospitalInfo.DynamicJsonProperty.double(xPos),
                                             yPos: HospitalInfo.DynamicJsonProperty.double(yPos))
                 hospitalItemList.append(hospItem)
+            }
+            success = true
+        }
+    }
+    
+    func getDgsbjtList(ykiho: String, completion: @escaping ([String], Bool) -> Void) {
+        DispatchQueue.global().async { [weak self] in
+            var queryStmt: OpaquePointer? = nil
+            var dgsbjtList: [String] = []
+            var success = false
+            defer {
+                completion(dgsbjtList, success)
+            }
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            let query = strongSelf.sqlDgsbjt + "'\(ykiho)'"
+            
+            guard sqlite3_prepare_v2(strongSelf.db, query, -1, &queryStmt, nil) == SQLITE_OK else {
+                let errorMessage = String(cString: sqlite3_errmsg(self?.db))
+                print("SELECT statement could not be prepared! \(errorMessage)")
+                return
+            }
+            
+            defer { // 완료 시 필수 실행
+                sqlite3_finalize(queryStmt)
+            }
+            
+            while sqlite3_step(queryStmt) == SQLITE_ROW {
+                if let dgsbjtCdNmCol = sqlite3_column_text(queryStmt, 3) {
+                    dgsbjtList.append(String(cString: dgsbjtCdNmCol))
+                }
             }
             success = true
         }
