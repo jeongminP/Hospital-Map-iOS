@@ -1,6 +1,0 @@
-framework module Pods_HospitalMap_HospitalMapUITests {
-  umbrella header "Pods-HospitalMap-HospitalMapUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}
