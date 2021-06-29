@@ -31,6 +31,8 @@ class InfoView: UIView {
     }
     
     func setHospitalInfo(item: HospitalInfo, distance: Double?) {
+        hospitalInfo = item
+        
         if let name = item.hospName {
             hospNameLabel.text = name
         }

@@ -362,7 +362,7 @@ extension MainViewController: MTMapViewDelegate {
     
     func mapView(_ mapView: MTMapView?, touchedCalloutBalloonOf poiItem: MTMapPOIItem?) {
         // 상세화면으로 이동
-        guard let item = infoView.hospitalInfo else {
+        guard let item = (poiItem?.userObject as? POIItemUserObject<HospitalInfo>)?.item else {
             return
         }
         let detailVC = DetailViewController(hospitalInfoItem: item)
