@@ -29,8 +29,12 @@ class BasicInfoView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setCodeNameLabel(clCdNm: String, dgsbjtStr: String) {
-        codeNameLabel.text = clCdNm + " | " + dgsbjtStr
+    func setCodeNameLabel(clCdNm: String?, dgsbjtStr: String) {
+        if let clCdNm = clCdNm {
+            codeNameLabel.text = clCdNm + " | " + dgsbjtStr
+        } else {
+            codeNameLabel.text = dgsbjtStr
+        }
     }
     
     func setPlaceLabel(place: String) {
@@ -142,7 +146,8 @@ class BasicInfoView: UIView {
             telNoHorizontalStackView.addArrangedSubview(callImageView)
         }
         
-        if let tel = hospitalInfo.telNo {
+        if let tel = hospitalInfo.telNo,
+           !tel.isEmpty {
             let telNoLabel = UILabel()
             telNoLabel.text = tel
             telNoLabel.textColor = UIColor.red
@@ -171,7 +176,8 @@ class BasicInfoView: UIView {
         urlTitleLabel.font = UIFont.boldSystemFont(ofSize: 17)
         hospUrlStackView.addArrangedSubview(urlTitleLabel)
         
-        if let url = hospitalInfo.hospUrl {
+        if let url = hospitalInfo.hospUrl,
+           !url.isEmpty {
             let hospUrlLabel = UILabel()
             let textRange = NSMakeRange(0, url.count)
             let attributedString = NSMutableAttributedString.init(string: url)

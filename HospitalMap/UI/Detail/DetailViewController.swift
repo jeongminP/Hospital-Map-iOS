@@ -16,6 +16,7 @@ class DetailViewController: UIViewController {
     private var basicInfoView: BasicInfoView?
     private var loadingView: LoadingView?
     
+    private let dbManager = HospitalDBManager()
     private let hospitalInfo: HospitalInfo
     private var hospitalDetailInfo: HospDetailInfo? {
         didSet {
@@ -36,6 +37,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         setupLayout()
         if let ykiho = hospitalInfo.ykiho {
+            fetchDepartments(ykiho: ykiho)
             requestHospitalDetailInfo(ykiho: ykiho)
         }
     }
@@ -84,6 +86,26 @@ class DetailViewController: UIViewController {
         }
     }
     
+    //MARK: - DB Accessing Method
+    private func fetchDepartments(ykiho: String) {
+        // DB에서 진료과 검색
+        dbManager.getDgsbjtList(ykiho: ykiho) { [weak self] dgsbjtList, success in
+            guard let strongSelf = self else {
+                return
+            }
+            var dgsbjtStr = dgsbjtList.reduce("") {
+                $0 + $1 + ", "
+            }
+            if !dgsbjtStr.isEmpty {
+                let range = dgsbjtStr.index(dgsbjtStr.endIndex, offsetBy: -2)..<dgsbjtStr.endIndex
+                dgsbjtStr.removeSubrange(range)
+            }
+            DispatchQueue.main.async {
+                strongSelf.basicInfoView?.setCodeNameLabel(clCdNm: strongSelf.hospitalInfo.classCodeName, dgsbjtStr: dgsbjtStr)
+            }
+        }
+    }
+    
     //MARK: - Networking Method
     private func requestHospitalDetailInfo(ykiho: String) {
         loadingView?.startLoading()
@@ -105,9 +127,13 @@ class DetailViewController: UIViewController {
                 case .success(let data):
                     do {
                         let res = try JSONDecoder().decode(ResponseStruct<HospDetailInfo>.self, from: data)
-                        self.hospitalDetailInfo = res.response?.body?.items?["item"] ?? nil
+                        DispatchQueue.main.async {
+                            self.hospitalDetailInfo = res.response?.body?.items?["item"] ?? nil
+                        }
                     } catch {
-                        self.hospitalDetailInfo = nil
+                        DispatchQueue.main.async {
+                            self.hospitalDetailInfo = nil
+                        }
                         NSLog("%s", String(describing: error))
                     }
                 case .failure(let e):
@@ -117,6 +143,18 @@ class DetailViewController: UIViewController {
     }
     
     private func didSetHospitalDetailInfo() {
+        var plcArr: [String] = []
+        if let plcNm = hospitalDetailInfo?.plcNm {
+            plcArr.append(plcNm)
+        }
+        if let plcDir = hospitalDetailInfo?.plcDir {
+            plcArr.append(plcDir)
+        }
+        if let plcDist = hospitalDetailInfo?.plcDist {
+            plcArr.append(plcDist)
+        }
+        basicInfoView?.setPlaceLabel(place: plcArr.joined(separator: " "))
+        
         //TODO: - 상세 정보 표시
     }
 }
