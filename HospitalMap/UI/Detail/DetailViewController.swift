@@ -11,8 +11,12 @@ import Alamofire
 
 class DetailViewController: UIViewController {
     
-    private let hospitalInfo: HospitalInfo
+    private let scrollView = UIScrollView()
+    private let stackView = UIStackView()
+    private var basicInfoView: BasicInfoView?
     private var loadingView: LoadingView?
+    
+    private let hospitalInfo: HospitalInfo
     private var hospitalDetailInfo: HospDetailInfo? {
         didSet {
             didSetHospitalDetailInfo()
@@ -41,7 +45,30 @@ class DetailViewController: UIViewController {
         title = hospitalInfo.hospName
         view.backgroundColor = .systemGray5
         
+        setupScrollableStackView()
         setupLoadingView()
+    }
+    
+    private func setupScrollableStackView() {
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        stackView.axis = .vertical
+        stackView.alignment = .leading
+        stackView.spacing = 10
+        scrollView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview().offset(10)
+            make.bottom.trailing.equalToSuperview().offset(-10)
+        }
+        
+        basicInfoView = BasicInfoView(frame: view.bounds, hospitalInfoItem: self.hospitalInfo)
+        guard let basicInfoView = basicInfoView else {
+            return
+        }
+        stackView.addArrangedSubview(basicInfoView)
     }
     
     private func setupLoadingView() {
