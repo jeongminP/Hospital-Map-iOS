@@ -43,8 +43,8 @@ class BasicInfoView: UIView {
             return
         }
         placeLabel.text = place
-        placeLabel.font = UIFont.systemFont(ofSize: 13)
-        placeLabel.textColor = .gray
+        placeLabel.font = UIFont.systemFont(ofSize: 15)
+        placeLabel.textColor = .darkGray
         placeLabel.isHidden = false
     }
     

@@ -16,6 +16,7 @@ class DetailViewController: UIViewController {
     private var basicInfoView: BasicInfoView?
     private var trmtHoursView: TreatmentHoursView?
     private var emyInfoView: EmergencyInfoView?
+    private var parkInfoView: ParkingInfoView?
     private var loadingView: LoadingView?
     
     private let dbManager = HospitalDBManager()
@@ -71,16 +72,22 @@ class DetailViewController: UIViewController {
         basicInfoView = BasicInfoView(frame: view.bounds, hospitalInfoItem: self.hospitalInfo)
         trmtHoursView = TreatmentHoursView(frame: view.bounds)
         emyInfoView = EmergencyInfoView(frame: view.bounds)
+        parkInfoView = ParkingInfoView(frame: view.bounds)
+        
         guard let basicInfoView = basicInfoView,
               let trmtHoursView = trmtHoursView,
-              let emyInfoView = emyInfoView else {
+              let emyInfoView = emyInfoView,
+              let parkInfoView = parkInfoView else {
             return
         }
+        
         stackView.addArrangedSubview(basicInfoView)
         stackView.addArrangedSubview(trmtHoursView)
         trmtHoursView.isHidden = true
         stackView.addArrangedSubview(emyInfoView)
         emyInfoView.isHidden = true
+        stackView.addArrangedSubview(parkInfoView)
+        parkInfoView.isHidden = true
     }
     
     private func setupLoadingView() {
@@ -186,6 +193,12 @@ class DetailViewController: UIViewController {
         if hospDetailInfo.emyDayYn != nil || hospDetailInfo.emyNgtYn != nil {
             emyInfoView?.setEmergencyInfo(emyDayYn: hospDetailInfo.emyDayYn, emyNgtYn: hospDetailInfo.emyNgtYn)
             emyInfoView?.isHidden = false
+        }
+        
+        if let parking = hospDetailInfo.parkXpnsYn,
+           (parking == "Y" || parking == "y") {
+            parkInfoView?.setParkingInfo(parkQty: hospDetailInfo.parkQty, parkEtc: hospitalDetailInfo?.parkEtc)
+            parkInfoView?.isHidden = false
         }
     }
 }
