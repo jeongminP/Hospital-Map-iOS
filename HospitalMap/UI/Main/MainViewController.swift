@@ -285,7 +285,10 @@ class MainViewController: UIViewController {
         showListButton.setTitle("병원 목록 보기 (\(hospitalItemList.count))", for: .normal)
         showListButton.isUserInteractionEnabled = true
         
-        //TODO: - empty 토스트 메시지 표시
+        // empty 시 토스트 메시지 표시
+        if hospitalItemList.isEmpty {
+            showToast(message: "일치하는 결과가 없습니다.")
+        }
         
         mapView?.removeAllPOIItems()
         for idx in 0..<hospitalItemList.count {
@@ -306,7 +309,21 @@ class MainViewController: UIViewController {
         }
     }
     
-    func distance(from: MTMapPointGeo, to:MTMapPointGeo) -> Double {
+    private func showToast(message : String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.view.backgroundColor = .darkGray
+        alert.view.alpha = 0.6
+        alert.view.layer.cornerRadius = 20
+        
+        present(alert, animated: true)
+        
+        // 1초 후 dismiss
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            alert.dismiss(animated: true)
+        }
+    }
+    
+    private func distance(from: MTMapPointGeo, to:MTMapPointGeo) -> Double {
         let fromLoc = CLLocation(latitude: from.latitude, longitude: from.longitude)
         let toLoc = CLLocation(latitude: to.latitude, longitude: to.longitude)
         return fromLoc.distance(from: toLoc) / 1000
