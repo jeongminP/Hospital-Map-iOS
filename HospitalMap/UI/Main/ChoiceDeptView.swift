@@ -8,11 +8,14 @@
 import Foundation
 
 class ChoiceDeptView: UITextField {
+    
+    //MARK: - Private Properties
     private let verticalStackView = UIStackView()
     private let choiceTitleLabel = UILabel()
     private let selectedDeptLabel = UILabel()
     private let rightImageView = UIImageView()
     
+    //MARK: - Internal Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -22,6 +25,11 @@ class ChoiceDeptView: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setDeptLabel(to string: String) {
+        selectedDeptLabel.text = string
+    }
+    
+    //MARK: - Private Methods
     private func setupLayout() {
         backgroundColor = UIColor.white
         layer.cornerRadius = 7
@@ -69,9 +77,5 @@ class ChoiceDeptView: UITextField {
             make.leading.equalToSuperview().offset(15)
             make.trailing.equalTo(rightImageView.snp.leading)
         }
-    }
-    
-    func setDeptLabel(to string: String) {
-        selectedDeptLabel.text = string
     }
 }

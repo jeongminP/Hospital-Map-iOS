@@ -9,7 +9,7 @@ import UIKit
 
 class HospitalTableViewCell: UITableViewCell {
 
-    
+    //MARK: - Private Properties - UI
     @IBOutlet private var roundView: UIView?
     @IBOutlet private var verticalStackView: UIStackView?
     @IBOutlet private var telNoStackView: UIStackView?
@@ -19,6 +19,7 @@ class HospitalTableViewCell: UITableViewCell {
     @IBOutlet private var telNoLabel: UILabel?
     @IBOutlet private var hospUrlLabel: UILabel?
     
+    //MARK: - Internal Methods
     override func awakeFromNib() {
         super.awakeFromNib()
         setupLayout()
@@ -26,32 +27,6 @@ class HospitalTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-    }
-    
-    private func setupLayout() {
-        roundView?.layer.cornerRadius = 5
-        
-        hospNameLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        hospNameLabel?.textColor = UIColor.black
-        hospNameLabel?.lineBreakMode = .byWordWrapping
-        hospNameLabel?.numberOfLines = 0
-        
-        if let image = UIImage.init(named: "SF_phone_down_fill") {
-            let imageSize: CGSize = CGSize(width: 15, height: 15)
-            let resizedImage = image.resizedImage(for: imageSize)
-                .withRenderingMode(.alwaysTemplate)
-            callImageView?.image = resizedImage
-        }
-        callImageView?.tintColor = UIColor.darkGray
-        
-        addressLabel?.textColor = UIColor.black
-        addressLabel?.lineBreakMode = .byWordWrapping
-        addressLabel?.numberOfLines = 0
-        
-        telNoLabel?.textColor = UIColor.red
-        
-        hospUrlLabel?.lineBreakMode = .byWordWrapping
-        hospUrlLabel?.numberOfLines = 0
     }
     
     func setHospitalInfo(item: HospitalInfo) {
@@ -90,5 +65,32 @@ class HospitalTableViewCell: UITableViewCell {
             hospUrlLabel.isHidden = true
             verticalStackView?.removeArrangedSubview(hospUrlLabel)
         }
+    }
+    
+    //MARK: - Private Method
+    private func setupLayout() {
+        roundView?.layer.cornerRadius = 5
+        
+        hospNameLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        hospNameLabel?.textColor = UIColor.black
+        hospNameLabel?.lineBreakMode = .byWordWrapping
+        hospNameLabel?.numberOfLines = 0
+        
+        if let image = UIImage.init(named: "SF_phone_down_fill") {
+            let imageSize: CGSize = CGSize(width: 15, height: 15)
+            let resizedImage = image.resizedImage(for: imageSize)
+                .withRenderingMode(.alwaysTemplate)
+            callImageView?.image = resizedImage
+        }
+        callImageView?.tintColor = UIColor.darkGray
+        
+        addressLabel?.textColor = UIColor.black
+        addressLabel?.lineBreakMode = .byWordWrapping
+        addressLabel?.numberOfLines = 0
+        
+        telNoLabel?.textColor = UIColor.red
+        
+        hospUrlLabel?.lineBreakMode = .byWordWrapping
+        hospUrlLabel?.numberOfLines = 0
     }
 }

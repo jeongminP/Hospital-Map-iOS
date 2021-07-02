@@ -120,7 +120,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0865F48367A2E50EE0B9667A /* Pods-HospitalMap-HospitalMapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMap-HospitalMapUITests.release.xcconfig"; path = "Target Support Files/Pods-HospitalMap-HospitalMapUITests/Pods-HospitalMap-HospitalMapUITests.release.xcconfig"; sourceTree = "<group>"; };
 		167BB1112679C93A0012DF76 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		167BB114268050760012DF76 /* hdb.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = hdb.db; sourceTree = "<group>"; };
 		167BB11626805C140012DF76 /* icon_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_loading.png; sourceTree = "<group>"; };
@@ -199,14 +198,15 @@
 		25B92C2A2671ED54004372DA /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		25B92C322671EEF1004372DA /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		25B92C392671F389004372DA /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		446306A9161824BE29D050A9 /* Pods-HospitalMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMap.debug.xcconfig"; path = "Target Support Files/Pods-HospitalMap/Pods-HospitalMap.debug.xcconfig"; sourceTree = "<group>"; };
+		509DC23CD79CAFE8E2BF991B /* Pods-HospitalMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMapTests.debug.xcconfig"; path = "Target Support Files/Pods-HospitalMapTests/Pods-HospitalMapTests.debug.xcconfig"; sourceTree = "<group>"; };
 		50C9CAED45502415157794BD /* Pods_HospitalMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HospitalMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		53A440340AE325D88BD79E43 /* Pods-HospitalMapTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMapTests.release.xcconfig"; path = "Target Support Files/Pods-HospitalMapTests/Pods-HospitalMapTests.release.xcconfig"; sourceTree = "<group>"; };
 		6BFE7A521F991CEE8CB5EBDD /* Pods_HospitalMap_HospitalMapUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HospitalMap_HospitalMapUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		78D286748EF71E9A153852BE /* Pods-HospitalMap-HospitalMapUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMap-HospitalMapUITests.debug.xcconfig"; path = "Target Support Files/Pods-HospitalMap-HospitalMapUITests/Pods-HospitalMap-HospitalMapUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		7F3AD9D003EB1AF0E5CE2209 /* Pods-HospitalMap-HospitalMapUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMap-HospitalMapUITests.release.xcconfig"; path = "Target Support Files/Pods-HospitalMap-HospitalMapUITests/Pods-HospitalMap-HospitalMapUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7F909F901CC39FB421B83484 /* Pods_HospitalMapTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HospitalMapTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8DBCCE3485133D94E7532384 /* Pods-HospitalMapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMapTests.debug.xcconfig"; path = "Target Support Files/Pods-HospitalMapTests/Pods-HospitalMapTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C09F5AA635A017BE6EA93299 /* Pods-HospitalMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMap.release.xcconfig"; path = "Target Support Files/Pods-HospitalMap/Pods-HospitalMap.release.xcconfig"; sourceTree = "<group>"; };
-		C5FB3DF2EAE571DD1307F4AD /* Pods-HospitalMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMap.debug.xcconfig"; path = "Target Support Files/Pods-HospitalMap/Pods-HospitalMap.debug.xcconfig"; sourceTree = "<group>"; };
+		815FEE6909F19813B1CACFA9 /* Pods-HospitalMapTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMapTests.release.xcconfig"; path = "Target Support Files/Pods-HospitalMapTests/Pods-HospitalMapTests.release.xcconfig"; sourceTree = "<group>"; };
+		8A79AF680EDA3ECCAD6D7C03 /* Pods-HospitalMap-HospitalMapUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMap-HospitalMapUITests.debug.xcconfig"; path = "Target Support Files/Pods-HospitalMap-HospitalMapUITests/Pods-HospitalMap-HospitalMapUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		ED63062CF28DD8D9A44077ED /* Pods-HospitalMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HospitalMap.release.xcconfig"; path = "Target Support Files/Pods-HospitalMap/Pods-HospitalMap.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,19 +246,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		07C0BC52598B6743ED4A750B /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C5FB3DF2EAE571DD1307F4AD /* Pods-HospitalMap.debug.xcconfig */,
-				C09F5AA635A017BE6EA93299 /* Pods-HospitalMap.release.xcconfig */,
-				78D286748EF71E9A153852BE /* Pods-HospitalMap-HospitalMapUITests.debug.xcconfig */,
-				0865F48367A2E50EE0B9667A /* Pods-HospitalMap-HospitalMapUITests.release.xcconfig */,
-				8DBCCE3485133D94E7532384 /* Pods-HospitalMapTests.debug.xcconfig */,
-				53A440340AE325D88BD79E43 /* Pods-HospitalMapTests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		167BB1132679C9400012DF76 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -321,8 +308,8 @@
 				25B92B732671E529004372DA /* HospitalMapTests */,
 				25B92B7E2671E529004372DA /* HospitalMapUITests */,
 				25B92B5B2671E521004372DA /* Products */,
-				07C0BC52598B6743ED4A750B /* Pods */,
 				BFC27987D39E66FC71BE4CE7 /* Frameworks */,
+				F819DE8468301278663C4569 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -451,6 +438,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F819DE8468301278663C4569 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				446306A9161824BE29D050A9 /* Pods-HospitalMap.debug.xcconfig */,
+				ED63062CF28DD8D9A44077ED /* Pods-HospitalMap.release.xcconfig */,
+				8A79AF680EDA3ECCAD6D7C03 /* Pods-HospitalMap-HospitalMapUITests.debug.xcconfig */,
+				7F3AD9D003EB1AF0E5CE2209 /* Pods-HospitalMap-HospitalMapUITests.release.xcconfig */,
+				509DC23CD79CAFE8E2BF991B /* Pods-HospitalMapTests.debug.xcconfig */,
+				815FEE6909F19813B1CACFA9 /* Pods-HospitalMapTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -462,7 +463,7 @@
 				25B92B562671E521004372DA /* Sources */,
 				25B92B572671E521004372DA /* Frameworks */,
 				25B92B582671E521004372DA /* Resources */,
-				DC644B0B605CCE498EEBA586 /* [CP] Embed Pods Frameworks */,
+				49749EB45F72311A932FC20D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -500,7 +501,7 @@
 				25B92B772671E529004372DA /* Sources */,
 				25B92B782671E529004372DA /* Frameworks */,
 				25B92B792671E529004372DA /* Resources */,
-				B927B14311A694B350465F8D /* [CP] Embed Pods Frameworks */,
+				ADF72B26EA6A7C5FAA486187 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -639,6 +640,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		49749EB45F72311A932FC20D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HospitalMap/Pods-HospitalMap-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HospitalMap/Pods-HospitalMap-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HospitalMap/Pods-HospitalMap-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		6F1BE9686D773BA43C98A979 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -683,7 +701,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B927B14311A694B350465F8D /* [CP] Embed Pods Frameworks */ = {
+		ADF72B26EA6A7C5FAA486187 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -698,23 +716,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HospitalMap-HospitalMapUITests/Pods-HospitalMap-HospitalMapUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DC644B0B605CCE498EEBA586 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HospitalMap/Pods-HospitalMap-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HospitalMap/Pods-HospitalMap-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HospitalMap/Pods-HospitalMap-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F6B000CBAA03ECAB1D94629A /* [CP] Check Pods Manifest.lock */ = {
@@ -937,7 +938,7 @@
 		};
 		25B92B852671E529004372DA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C5FB3DF2EAE571DD1307F4AD /* Pods-HospitalMap.debug.xcconfig */;
+			baseConfigurationReference = 446306A9161824BE29D050A9 /* Pods-HospitalMap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -963,7 +964,7 @@
 		};
 		25B92B862671E529004372DA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C09F5AA635A017BE6EA93299 /* Pods-HospitalMap.release.xcconfig */;
+			baseConfigurationReference = ED63062CF28DD8D9A44077ED /* Pods-HospitalMap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -989,7 +990,7 @@
 		};
 		25B92B882671E529004372DA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8DBCCE3485133D94E7532384 /* Pods-HospitalMapTests.debug.xcconfig */;
+			baseConfigurationReference = 509DC23CD79CAFE8E2BF991B /* Pods-HospitalMapTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1016,7 +1017,7 @@
 		};
 		25B92B892671E529004372DA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 53A440340AE325D88BD79E43 /* Pods-HospitalMapTests.release.xcconfig */;
+			baseConfigurationReference = 815FEE6909F19813B1CACFA9 /* Pods-HospitalMapTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1043,7 +1044,7 @@
 		};
 		25B92B8B2671E529004372DA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 78D286748EF71E9A153852BE /* Pods-HospitalMap-HospitalMapUITests.debug.xcconfig */;
+			baseConfigurationReference = 8A79AF680EDA3ECCAD6D7C03 /* Pods-HospitalMap-HospitalMapUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1064,7 +1065,7 @@
 		};
 		25B92B8C2671E529004372DA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0865F48367A2E50EE0B9667A /* Pods-HospitalMap-HospitalMapUITests.release.xcconfig */;
+			baseConfigurationReference = 7F3AD9D003EB1AF0E5CE2209 /* Pods-HospitalMap-HospitalMapUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

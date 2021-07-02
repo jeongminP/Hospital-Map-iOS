@@ -49,7 +49,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    //MARK: - Methods
+    //MARK: - Internal Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
@@ -67,6 +67,7 @@ class MainViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
+    //MARK: - Private Methods
     private func setupMapView() {
         mapView = MTMapView(frame: view.bounds)
         guard let mapView = mapView else {
@@ -207,6 +208,7 @@ class MainViewController: UIViewController {
         }
     }
     
+    //MARK: - Private Methods - Actions
     @objc private func pickerViewDoneDidTapped() {
         infoView.isHidden = true
         currentDept = departmendCodeArr[tmpSelectedRow]
@@ -246,6 +248,7 @@ class MainViewController: UIViewController {
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
+    //MARK: - Private Methods - DB Accessing
     private func fetchHospitalList(deptCode: DepartmendCode, emdongName: String) {
         loadingView?.startLoading()
         dbManager.getHospitalList(clCd: deptCode.rawValue, emdongNm: emdongName) { [weak self] hospitalList, success in
@@ -370,6 +373,7 @@ extension MainViewController: MTMapViewDelegate {
     }
 }
 
+//MARK: - MTMapReverseGeoCoderDelegate
 extension MainViewController: MTMapReverseGeoCoderDelegate {
     func mtMapReverseGeoCoder(_ rGeoCoder: MTMapReverseGeoCoder?, foundAddress addressString: String?) {
         guard let addrStr = addressString,

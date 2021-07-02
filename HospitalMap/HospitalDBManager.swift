@@ -9,8 +9,9 @@ import Foundation
 import SQLite3
 
 final class HospitalDBManager {
-    private let dbName = "hdb.db"
     
+    //MARK: - Private Properties
+    private let dbName = "hdb.db"
     private let sqlCreateHosp = "CREATE TABLE if not exists tb_hospbasislist ("
         + "_id integer primary key autoincrement,"
         + "addr text,"
@@ -42,7 +43,7 @@ final class HospitalDBManager {
     private var dbPath = ""
     private var db: OpaquePointer?
     
-    // MARK: - internal
+    // MARK: - Internal Methods
     init() {
         db = createTable()
     }
@@ -122,7 +123,7 @@ final class HospitalDBManager {
                 sqlite3_finalize(queryStmt)
             }
             while sqlite3_step(queryStmt) == SQLITE_ROW {
-                var ykiho, hospName, clCdNm, addr, telNo, hospUrl, dgsbjtCdNm: String?
+                var ykiho, hospName, clCdNm, addr, telNo, hospUrl: String?
                 var estbDd, drTotCnt, sdrCnt, gdrCnt, resdntCnt, intnCnt: Int?
                 var xPos, yPos: Double?
                 
@@ -151,9 +152,6 @@ final class HospitalDBManager {
                 }
                 if let ykihoCol = sqlite3_column_text(queryStmt, 15) {
                     ykiho = String(cString: ykihoCol)
-                }
-                if let dgsbjtCdNmCol = sqlite3_column_text(queryStmt, 19) {
-                    dgsbjtCdNm = String(cString: dgsbjtCdNmCol)
                 }
                 
                 guard let xPos = xPos,

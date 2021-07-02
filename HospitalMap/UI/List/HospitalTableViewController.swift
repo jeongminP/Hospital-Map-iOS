@@ -10,13 +10,17 @@ import SnapKit
 
 class HospitalTableViewController: UIViewController {
     
-    private let hospitalList: [HospitalInfo]
-    private let emdongName, deptName: String
+    //MARK: - Private Properties - UI
     private let tableView = UITableView()
     private let emptyView = UIView()
     private let emptyLabel = UILabel()
     private let hospitalCellID = "HospitalTableViewCell"
     
+    //MARK: - Private Properties
+    private let hospitalList: [HospitalInfo]
+    private let emdongName, deptName: String
+    
+    //MARK: - Internal Methods
     init(hospitalList: [HospitalInfo], emdongName: String, deptName: String) {
         self.hospitalList = hospitalList
         self.emdongName = emdongName
@@ -33,6 +37,7 @@ class HospitalTableViewController: UIViewController {
         setupLayout()
     }
     
+    //MARK: - Private Method
     private func setupLayout() {
         navigationController?.isNavigationBarHidden = false
         self.title = emdongName + " " + deptName + " : \(hospitalList.count)건"
@@ -69,6 +74,7 @@ class HospitalTableViewController: UIViewController {
     }
 }
 
+//MARK: - UITableViewDelegate, UITableViewDataSource
 extension HospitalTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 상세화면으로 이동

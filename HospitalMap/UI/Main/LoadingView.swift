@@ -9,8 +9,11 @@ import Foundation
 import SnapKit
 
 final class LoadingView: UIView {
+    
+    //MARK: - Private Property
     private let spinner = UIActivityIndicatorView(style: .large)
     
+    //MARK: - Internal Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor(white: 0.7, alpha: 0.3)
@@ -31,7 +34,7 @@ final class LoadingView: UIView {
         spinner.stopAnimating()
     }
     
-    // MARK: - private
+    // MARK: - Private Method
     private func setupSpinner() {
         spinner.frame = CGRect(x: 0.0, y: 0.0, width: 100, height: 100)
         spinner.hidesWhenStopped = true

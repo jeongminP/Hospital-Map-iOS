@@ -8,6 +8,8 @@
 import Foundation
 
 class InfoView: UIView {
+    
+    //MARK: - Private Properties
     private let verticalStackView = UIStackView()
     private let hospNameStackView = UIStackView()
     private let telNoStackView = UIStackView()
@@ -20,7 +22,7 @@ class InfoView: UIView {
     private let hospUrlLabel = UILabel()
     private(set) var hospitalInfo: HospitalInfo?
     
-    //MARK: - internal methods
+    //MARK: - Internal Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -82,14 +84,13 @@ class InfoView: UIView {
         codeNameLabel.text = clCdNm + " | " + dgsbjtStr
     }
     
-    //MARK: - private methods
+    //MARK: - Private Methods
     private func setupLayout() {
         backgroundColor = UIColor.white
         layer.cornerRadius = 7
         layer.borderColor = UIColor.blue.cgColor
         layer.borderWidth = 1
         
-        hospNameLabel.text = "병원 이름"
         hospNameLabel.textColor = UIColor.black
         hospNameLabel.font = UIFont.boldSystemFont(ofSize: 20)
         
