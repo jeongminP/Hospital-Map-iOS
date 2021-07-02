@@ -45,7 +45,7 @@ class BasicInfoView: UIView {
         placeLabel.text = place
         placeLabel.font = UIFont.systemFont(ofSize: 13)
         placeLabel.textColor = .gray
-        addressStackView.addArrangedSubview(placeLabel)
+        placeLabel.isHidden = false
     }
     
     //MARK: - private methods
@@ -110,6 +110,8 @@ class BasicInfoView: UIView {
             addressLabel.numberOfLines = 0
             addressStackView.addArrangedSubview(addressLabel)
         }
+        
+        addressStackView.addArrangedSubview(placeLabel)
         
         addressStackView.axis = .vertical
         addressStackView.alignment = .leading

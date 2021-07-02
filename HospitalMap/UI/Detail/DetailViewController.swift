@@ -14,6 +14,7 @@ class DetailViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
     private var basicInfoView: BasicInfoView?
+    private var trmtHoursView: TreatmentHoursView?
     private var loadingView: LoadingView?
     
     private let dbManager = HospitalDBManager()
@@ -71,6 +72,13 @@ class DetailViewController: UIViewController {
             return
         }
         stackView.addArrangedSubview(basicInfoView)
+        
+        trmtHoursView = TreatmentHoursView(frame: view.bounds)
+        guard let trmtHoursView = trmtHoursView else {
+            return
+        }
+        stackView.addArrangedSubview(trmtHoursView)
+        trmtHoursView.isHidden = true
     }
     
     private func setupLoadingView() {
@@ -127,13 +135,15 @@ class DetailViewController: UIViewController {
                 case .success(let data):
                     do {
                         let res = try JSONDecoder().decode(ResponseStruct<HospDetailInfo>.self, from: data)
+                        guard let detailInfo = res.response?.body?.items?["item"] else {
+                            return
+                        }
+                        
                         DispatchQueue.main.async {
-                            self.hospitalDetailInfo = res.response?.body?.items?["item"] ?? nil
+                            self.hospitalDetailInfo = detailInfo
                         }
                     } catch {
-                        DispatchQueue.main.async {
-                            self.hospitalDetailInfo = nil
-                        }
+                        // 상세정보 없음
                         NSLog("%s", String(describing: error))
                     }
                 case .failure(let e):
@@ -143,18 +153,34 @@ class DetailViewController: UIViewController {
     }
     
     private func didSetHospitalDetailInfo() {
+        // 상세 정보 표시
+        guard let hospDetailInfo = hospitalDetailInfo else {
+            return
+        }
+        
         var plcArr: [String] = []
-        if let plcNm = hospitalDetailInfo?.plcNm {
+        if let plcNm = hospDetailInfo.plcNm {
             plcArr.append(plcNm)
         }
-        if let plcDir = hospitalDetailInfo?.plcDir {
+        if let plcDir = hospDetailInfo.plcDir {
             plcArr.append(plcDir)
         }
-        if let plcDist = hospitalDetailInfo?.plcDist {
+        if let plcDist = hospDetailInfo.plcDist {
             plcArr.append(plcDist)
         }
         basicInfoView?.setPlaceLabel(place: plcArr.joined(separator: " "))
         
-        //TODO: - 상세 정보 표시
+        if hospDetailInfo.rcvWeek != nil ||
+            hospDetailInfo.lunchWeek != nil ||
+            hospDetailInfo.rcvSat != nil ||
+            hospDetailInfo.lunchSat != nil ||
+            hospDetailInfo.noTrmtSun != nil ||
+            hospDetailInfo.noTrmtHoli != nil {
+            trmtHoursView?.setTreatmentHours(rcvWeek: hospDetailInfo.rcvWeek, lunchWeek: hospDetailInfo.lunchWeek,
+                                             rcvSat: hospDetailInfo.rcvSat, lunchSat: hospDetailInfo.lunchSat,
+                                             sun: hospDetailInfo.noTrmtSun, holi: hospDetailInfo.noTrmtHoli)
+            trmtHoursView?.isHidden = false
+        }
+        
     }
 }
