@@ -71,7 +71,12 @@ class HospitalTableViewController: UIViewController {
 
 extension HospitalTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //TODO: - 상세화면으로 이동
+        // 상세화면으로 이동
+        guard hospitalList.count > indexPath.row else {
+            return
+        }
+        let detailVC = DetailViewController(hospitalInfoItem: hospitalList[indexPath.row])
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
@@ -81,7 +86,8 @@ extension HospitalTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: hospitalCellID, for: indexPath) as? HospitalTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: hospitalCellID, for: indexPath) as? HospitalTableViewCell,
+              hospitalList.count > indexPath.row else {
             return UITableViewCell()
         }
         cell.setHospitalInfo(item: hospitalList[indexPath.row])

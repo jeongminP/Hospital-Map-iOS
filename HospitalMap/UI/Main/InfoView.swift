@@ -18,6 +18,7 @@ class InfoView: UIView {
     private let callImageView = UIImageView()
     private let telNoLabel = UILabel()
     private let hospUrlLabel = UILabel()
+    private(set) var hospitalInfo: HospitalInfo?
     
     //MARK: - internal methods
     override init(frame: CGRect) {
@@ -30,6 +31,8 @@ class InfoView: UIView {
     }
     
     func setHospitalInfo(item: HospitalInfo, distance: Double?) {
+        hospitalInfo = item
+        
         if let name = item.hospName {
             hospNameLabel.text = name
         }
