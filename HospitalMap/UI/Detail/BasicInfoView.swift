@@ -123,6 +123,8 @@ class BasicInfoView: UIView {
             addressStackView.addArrangedSubview(addressLabel)
         }
         
+        placeLabel.lineBreakMode = .byWordWrapping
+        placeLabel.numberOfLines = 0
         addressStackView.addArrangedSubview(placeLabel)
         
         addressStackView.axis = .vertical

@@ -182,6 +182,7 @@ class MainViewController: UIViewController {
     }
     
     private func setupInfoView() {
+        infoView.delegate = self
         let infoViewTap = UITapGestureRecognizer(target: self, action: #selector(infoViewDidTapped))
         infoView.addGestureRecognizer(infoViewTap)
         view.addSubview(infoView)
@@ -261,6 +262,24 @@ class MainViewController: UIViewController {
         }
     }
     
+    private func fetchDepartments(ykiho: String, clCdNm: String) {
+        dbManager.getDgsbjtList(ykiho: ykiho) { [weak self] dgsbjtList, success in
+            guard let strongSelf = self else {
+                return
+            }
+            var dgsbjtStr = dgsbjtList.reduce("") {
+                $0 + $1 + ", "
+            }
+            if !dgsbjtStr.isEmpty {
+                let range = dgsbjtStr.index(dgsbjtStr.endIndex, offsetBy: -2)..<dgsbjtStr.endIndex
+                dgsbjtStr.removeSubrange(range)
+            }
+            DispatchQueue.main.async {
+                strongSelf.infoView.setCodeNameLabel(clCdNm: clCdNm, dgsbjtStr: dgsbjtStr)
+            }
+        }
+    }
+    
     private func didSetHospitalItemList() {
         loadingView?.stopLoading()
         showListButton.setTitle("병원 목록 보기 (\(hospitalItemList.count))", for: .normal)
@@ -291,6 +310,31 @@ class MainViewController: UIViewController {
         let fromLoc = CLLocation(latitude: from.latitude, longitude: from.longitude)
         let toLoc = CLLocation(latitude: to.latitude, longitude: to.longitude)
         return fromLoc.distance(from: toLoc) / 1000
+    }
+}
+
+//MARK: - InfoViewDelegate
+extension MainViewController: InfoViewDelegate {
+    func infoView(_ infoView: InfoView, didTappedTelNoView telNoView: UIView, of hospitalInfo: HospitalInfo) {
+        guard let telNo = hospitalInfo.telNo,
+              let url = URL(string: "tel://" + telNo) else {
+            return
+        }
+        
+        UIApplication.shared.open(url,
+                                  options: [:],
+                                  completionHandler: { success in })
+    }
+    
+    func infoView(_ infoView: InfoView, didTappedHospUrlView hospUrlView: UIView, of hospitalInfo: HospitalInfo) {
+        guard let hospUrl = hospitalInfo.hospUrl,
+              let url = URL(string: hospUrl) else {
+            return
+        }
+        
+        UIApplication.shared.open(url,
+                                  options: [:],
+                                  completionHandler: { success in })
     }
 }
 
@@ -333,21 +377,7 @@ extension MainViewController: MTMapViewDelegate {
         }
         
         // DB에서 진료과 검색
-        dbManager.getDgsbjtList(ykiho: ykiho) { [weak self] dgsbjtList, success in
-            guard let strongSelf = self else {
-                return
-            }
-            var dgsbjtStr = dgsbjtList.reduce("") {
-                $0 + $1 + ", "
-            }
-            if !dgsbjtStr.isEmpty {
-                let range = dgsbjtStr.index(dgsbjtStr.endIndex, offsetBy: -2)..<dgsbjtStr.endIndex
-                dgsbjtStr.removeSubrange(range)
-            }
-            DispatchQueue.main.async {
-                strongSelf.infoView.setCodeNameLabel(clCdNm: clCdNm, dgsbjtStr: dgsbjtStr)
-            }
-        }
+        fetchDepartments(ykiho: ykiho, clCdNm: clCdNm)
         
         // 거리 계산
         var dist: Double?
