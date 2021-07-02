@@ -8,12 +8,14 @@
 import UIKit
 
 class EmergencyInfoView: UIView {
+    
+    //MARK: - Private Properties
     private let verticalStackView = UIStackView()
     private let titleLabel = UILabel()
     private let emyDayLabel = UILabel()
     private let emyNgtLabel = UILabel()
     
-    //MARK: - internal methods
+    //MARK: - Internal Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -40,7 +42,7 @@ class EmergencyInfoView: UIView {
         }
     }
     
-    //MARK: - private methods
+    //MARK: - Private Methods
     private func setupLayout() {
         backgroundColor = UIColor.white
         layer.cornerRadius = 5

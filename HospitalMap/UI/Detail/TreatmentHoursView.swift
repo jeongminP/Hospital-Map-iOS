@@ -8,6 +8,8 @@
 import UIKit
 
 class TreatmentHoursView: UIView {
+    
+    //MARK: - Private Properties
     private let verticalStackView = UIStackView()
     private let titleLabel = UILabel()
     private let rcvWeekLabel = UILabel()
@@ -17,7 +19,7 @@ class TreatmentHoursView: UIView {
     private let noTrmtSunLabel = UILabel()
     private let noTrmtHoliLabel = UILabel()
     
-    //MARK: - internal methods
+    //MARK: - Internal Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -66,7 +68,7 @@ class TreatmentHoursView: UIView {
         }
     }
     
-    //MARK: - private methods
+    //MARK: - Private Methods
     private func setupLayout() {
         backgroundColor = UIColor.white
         layer.cornerRadius = 5

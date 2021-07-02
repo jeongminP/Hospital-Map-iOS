@@ -11,6 +11,7 @@ import Alamofire
 
 class DetailViewController: UIViewController {
     
+    //MARK: - Private Properties - UI
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
     private var basicInfoView: BasicInfoView?
@@ -19,6 +20,7 @@ class DetailViewController: UIViewController {
     private var parkInfoView: ParkingInfoView?
     private var loadingView: LoadingView?
     
+    //MARK: - Private Properties
     private let dbManager = HospitalDBManager()
     private let hospitalInfo: HospitalInfo
     private var hospitalDetailInfo: HospDetailInfo? {
@@ -27,6 +29,7 @@ class DetailViewController: UIViewController {
         }
     }
     
+    //MARK: - Internal Methods
     init(hospitalInfoItem: HospitalInfo) {
         self.hospitalInfo = hospitalInfoItem
         super.init(nibName: nil, bundle: nil)
@@ -45,6 +48,7 @@ class DetailViewController: UIViewController {
         }
     }
     
+    //MARK: - Private Methods
     private func setupLayout() {
         navigationController?.isNavigationBarHidden = false
         title = hospitalInfo.hospName
@@ -82,6 +86,7 @@ class DetailViewController: UIViewController {
         }
         
         stackView.addArrangedSubview(basicInfoView)
+        basicInfoView.delegate = self
         stackView.addArrangedSubview(trmtHoursView)
         trmtHoursView.isHidden = true
         stackView.addArrangedSubview(emyInfoView)
@@ -103,7 +108,7 @@ class DetailViewController: UIViewController {
         }
     }
     
-    //MARK: - DB Accessing Method
+    //MARK: - Private Method - DB Accessing
     private func fetchDepartments(ykiho: String) {
         // DB에서 진료과 검색
         dbManager.getDgsbjtList(ykiho: ykiho) { [weak self] dgsbjtList, success in
@@ -123,7 +128,7 @@ class DetailViewController: UIViewController {
         }
     }
     
-    //MARK: - Networking Method
+    //MARK: - Private Method - Networking
     private func requestHospitalDetailInfo(ykiho: String) {
         loadingView?.startLoading()
         let urlString = "http://apis.data.go.kr/B551182/medicInsttDetailInfoService/getDetailInfo?pageNo=1&numOfRows=50&_type=json"
@@ -200,5 +205,30 @@ class DetailViewController: UIViewController {
             parkInfoView?.setParkingInfo(parkQty: hospDetailInfo.parkQty, parkEtc: hospitalDetailInfo?.parkEtc)
             parkInfoView?.isHidden = false
         }
+    }
+}
+
+//MARK: - BasicInfoViewDelegate
+extension DetailViewController: BasicInfoViewDelegate {
+    func basicInfoView(_ basicInfoView: BasicInfoView, didTappedTelNoView telNoView: UIView) {
+        guard let telNo = hospitalInfo.telNo,
+              let url = URL(string: "tel://" + telNo) else {
+            return
+        }
+        
+        UIApplication.shared.open(url,
+                                  options: [:],
+                                  completionHandler: { success in })
+    }
+    
+    func basicInfoView(_ basicInfoView: BasicInfoView, didTappedHospUrlView hospUrlView: UIView) {
+        guard let hospUrl = hospitalInfo.hospUrl,
+              let url = URL(string: hospUrl) else {
+            return
+        }
+        
+        UIApplication.shared.open(url,
+                                  options: [:],
+                                  completionHandler: { success in })
     }
 }

@@ -8,12 +8,14 @@
 import UIKit
 
 class ParkingInfoView: UIView {
+    
+    //MARK: - Private Properties
     private let verticalStackView = UIStackView()
     private let titleLabel = UILabel()
     private let parkQtyLabel = UILabel()
     private let parkEtcLabel = UILabel()
     
-    //MARK: - internal methods
+    //MARK: - Internal Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -41,7 +43,7 @@ class ParkingInfoView: UIView {
         }
     }
     
-    //MARK: - private methods
+    //MARK: - Private Methods
     private func setupLayout() {
         backgroundColor = UIColor.white
         layer.cornerRadius = 5

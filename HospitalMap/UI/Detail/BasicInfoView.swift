@@ -8,16 +8,28 @@
 import UIKit
 import SnapKit
 
+protocol BasicInfoViewDelegate: AnyObject {
+    func basicInfoView(_ basicInfoView: BasicInfoView, didTappedTelNoView telNoView: UIView)
+    func basicInfoView(_ basicInfoView: BasicInfoView, didTappedHospUrlView hospUrlView: UIView)
+}
+
 class BasicInfoView: UIView {
+    
+    //MARK: - Private Properties
     private let verticalStackView = UIStackView()
     private let addressStackView = UIStackView()
     private let basicInfoLabel = UILabel()
     private let codeNameLabel = UILabel()
     private let placeLabel = UILabel()
+    private let telNoLabel = UILabel()
+    private let hospUrlLabel = UILabel()
     private let estbDdLabel = UILabel()
     private let hospitalInfo: HospitalInfo
     
-    //MARK: - internal methods
+    //MARK: - Internal Property
+    weak var delegate: BasicInfoViewDelegate?
+    
+    //MARK: - Internal Methods
     init(frame: CGRect, hospitalInfoItem: HospitalInfo) {
         self.hospitalInfo = hospitalInfoItem
         super.init(frame: frame)
@@ -48,7 +60,7 @@ class BasicInfoView: UIView {
         placeLabel.isHidden = false
     }
     
-    //MARK: - private methods
+    //MARK: - Private Methods
     private func setupLayout() {
         backgroundColor = UIColor.white
         layer.cornerRadius = 5
@@ -150,7 +162,6 @@ class BasicInfoView: UIView {
         
         if let tel = hospitalInfo.telNo,
            !tel.isEmpty {
-            let telNoLabel = UILabel()
             telNoLabel.text = tel
             telNoLabel.textColor = UIColor.red
             telNoHorizontalStackView.addArrangedSubview(telNoLabel)
@@ -180,7 +191,6 @@ class BasicInfoView: UIView {
         
         if let url = hospitalInfo.hospUrl,
            !url.isEmpty {
-            let hospUrlLabel = UILabel()
             let textRange = NSMakeRange(0, url.count)
             let attributedString = NSMutableAttributedString.init(string: url)
             attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: textRange)
@@ -283,25 +293,12 @@ class BasicInfoView: UIView {
         return spaceView
     }
     
+    //MARK: - Private Methods - Actions
     @objc private func telNoStackViewDidTapped() {
-        guard let telNo = hospitalInfo.telNo,
-              let url = URL(string: "tel://" + telNo) else {
-            return
-        }
-        
-        UIApplication.shared.open(url,
-                                  options: [:],
-                                  completionHandler: { success in })
+        delegate?.basicInfoView(self, didTappedTelNoView: telNoLabel)
     }
     
     @objc private func hospUrlStackViewDidTapped() {
-        guard let hospUrl = hospitalInfo.hospUrl,
-              let url = URL(string: hospUrl) else {
-            return
-        }
-        
-        UIApplication.shared.open(url,
-                                  options: [:],
-                                  completionHandler: { success in })
+        delegate?.basicInfoView(self, didTappedHospUrlView: hospUrlLabel)
     }
 }
