@@ -19,6 +19,7 @@
 		2514320E2685B305006E4BE0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2514320D2685B305006E4BE0 /* DetailViewController.swift */; };
 		25143210268B0E31006E4BE0 /* BasicInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2514320F268B0E31006E4BE0 /* BasicInfoView.swift */; };
 		25143212268EA198006E4BE0 /* TreatmentHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25143211268EA198006E4BE0 /* TreatmentHoursView.swift */; };
+		25143214268EC9F9006E4BE0 /* EmergencyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25143213268EC9F9006E4BE0 /* EmergencyInfoView.swift */; };
 		25850BF62678D28900E09246 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25850BF52678D28900E09246 /* Extension.swift */; };
 		25850BF82678D2BE00E09246 /* ChoiceDeptView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25850BF72678D2BE00E09246 /* ChoiceDeptView.swift */; };
 		25850BFC2682D27E00E09246 /* HospitalDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25850BFB2682D27E00E09246 /* HospitalDBManager.swift */; };
@@ -130,6 +131,7 @@
 		2514320D2685B305006E4BE0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		2514320F268B0E31006E4BE0 /* BasicInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoView.swift; sourceTree = "<group>"; };
 		25143211268EA198006E4BE0 /* TreatmentHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreatmentHoursView.swift; sourceTree = "<group>"; };
+		25143213268EC9F9006E4BE0 /* EmergencyInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyInfoView.swift; sourceTree = "<group>"; };
 		25850BF52678D28900E09246 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		25850BF72678D2BE00E09246 /* ChoiceDeptView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceDeptView.swift; sourceTree = "<group>"; };
 		25850BFB2682D27E00E09246 /* HospitalDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HospitalDBManager.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				2514320D2685B305006E4BE0 /* DetailViewController.swift */,
 				2514320F268B0E31006E4BE0 /* BasicInfoView.swift */,
 				25143211268EA198006E4BE0 /* TreatmentHoursView.swift */,
+				25143213268EC9F9006E4BE0 /* EmergencyInfoView.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -740,6 +743,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25143214268EC9F9006E4BE0 /* EmergencyInfoView.swift in Sources */,
 				25850BF62678D28900E09246 /* Extension.swift in Sources */,
 				25143212268EA198006E4BE0 /* TreatmentHoursView.swift in Sources */,
 				259E56FA26731F420042A853 /* HospitalInfo.swift in Sources */,

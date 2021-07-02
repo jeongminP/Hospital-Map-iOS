@@ -15,6 +15,7 @@ class DetailViewController: UIViewController {
     private let stackView = UIStackView()
     private var basicInfoView: BasicInfoView?
     private var trmtHoursView: TreatmentHoursView?
+    private var emyInfoView: EmergencyInfoView?
     private var loadingView: LoadingView?
     
     private let dbManager = HospitalDBManager()
@@ -68,17 +69,18 @@ class DetailViewController: UIViewController {
         }
         
         basicInfoView = BasicInfoView(frame: view.bounds, hospitalInfoItem: self.hospitalInfo)
-        guard let basicInfoView = basicInfoView else {
+        trmtHoursView = TreatmentHoursView(frame: view.bounds)
+        emyInfoView = EmergencyInfoView(frame: view.bounds)
+        guard let basicInfoView = basicInfoView,
+              let trmtHoursView = trmtHoursView,
+              let emyInfoView = emyInfoView else {
             return
         }
         stackView.addArrangedSubview(basicInfoView)
-        
-        trmtHoursView = TreatmentHoursView(frame: view.bounds)
-        guard let trmtHoursView = trmtHoursView else {
-            return
-        }
         stackView.addArrangedSubview(trmtHoursView)
         trmtHoursView.isHidden = true
+        stackView.addArrangedSubview(emyInfoView)
+        emyInfoView.isHidden = true
     }
     
     private func setupLoadingView() {
@@ -143,8 +145,7 @@ class DetailViewController: UIViewController {
                             self.hospitalDetailInfo = detailInfo
                         }
                     } catch {
-                        // 상세정보 없음
-                        NSLog("%s", String(describing: error))
+                        NSLog("상세정보가 없습니다.")
                     }
                 case .failure(let e):
                     print(e)
@@ -182,5 +183,9 @@ class DetailViewController: UIViewController {
             trmtHoursView?.isHidden = false
         }
         
+        if hospDetailInfo.emyDayYn != nil || hospDetailInfo.emyNgtYn != nil {
+            emyInfoView?.setEmergencyInfo(emyDayYn: hospDetailInfo.emyDayYn, emyNgtYn: hospDetailInfo.emyNgtYn)
+            emyInfoView?.isHidden = false
+        }
     }
 }
